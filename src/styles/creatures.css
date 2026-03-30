@@ -1,0 +1,220 @@
+/* =========================================================
+   SPRING SCHEDULING MICROSITE — CREATURES & AMBIENT DOTS
+   All compositor-only: transform + opacity.
+   contain: layout style isolates repaints.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Ambient Floating Dots — Drift Animation
+   --------------------------------------------------------- */
+@keyframes floatDrift {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.35;
+  }
+  25% {
+    transform: translateY(-30px) translateX(15px) scale(1.05);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-15px) translateX(-10px) scale(0.95);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translateY(-40px) translateX(8px) scale(1.02);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.35;
+  }
+}
+
+@keyframes floatDriftAlt {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.35;
+  }
+  30% {
+    transform: translateY(-20px) translateX(-12px) scale(1.08);
+    opacity: 0.42;
+  }
+  60% {
+    transform: translateY(-35px) translateX(18px) scale(0.96);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.35;
+  }
+}
+
+@keyframes floatDriftSlow {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.35;
+  }
+  33% {
+    transform: translateY(-25px) translateX(20px) rotate(5deg);
+    opacity: 0.4;
+  }
+  66% {
+    transform: translateY(-10px) translateX(-15px) rotate(-3deg);
+    opacity: 0.32;
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.35;
+  }
+}
+
+.ambient .dot {
+  will-change: transform, opacity;
+}
+
+.dot-1 { animation: floatDrift     18s ease-in-out infinite; }
+.dot-2 { animation: floatDriftAlt  22s ease-in-out infinite 2s; }
+.dot-3 { animation: floatDriftSlow 25s ease-in-out infinite 1s; }
+.dot-4 { animation: floatDrift     20s ease-in-out infinite 4s; }
+.dot-5 { animation: floatDriftAlt  23s ease-in-out infinite 3s; }
+.dot-6 { animation: floatDriftSlow 19s ease-in-out infinite 6s; }
+.dot-7 { animation: floatDrift     24s ease-in-out infinite 5s; }
+.dot-8 { animation: floatDriftAlt  17s ease-in-out infinite 2.5s; }
+
+/* ---------------------------------------------------------
+   2. Creature Base
+   --------------------------------------------------------- */
+.creature {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  contain: layout style;
+  will-change: transform;
+}
+
+/* ---------------------------------------------------------
+   3. Butterfly — Lazy Cross-Screen Float
+   --------------------------------------------------------- */
+@keyframes butterflyCross {
+  0% {
+    transform: translateX(-100px) translateY(0) rotate(-5deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.9;
+  }
+  15% {
+    transform: translateX(15vw) translateY(-25px) rotate(3deg);
+    opacity: 0.9;
+  }
+  30% {
+    transform: translateX(30vw) translateY(20px) rotate(-4deg);
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(45vw) translateY(-15px) rotate(5deg);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(60vw) translateY(10px) rotate(-3deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(75vw) translateY(-20px) rotate(4deg);
+    opacity: 0.9;
+  }
+  90% {
+    transform: translateX(90vw) translateY(5px) rotate(-2deg);
+    opacity: 0.8;
+  }
+  97% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px)) translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+.creature-butterfly {
+  width: 60px;
+  height: 60px;
+  top: 18%;
+  left: 0;
+  animation: butterflyCross 25s ease-in-out infinite;
+  animation-delay: 5s;
+}
+
+/* ---------------------------------------------------------
+   4. Leaves — Gentle Float in Top-Right
+   --------------------------------------------------------- */
+@keyframes leafFloat {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-12px) translateX(-8px) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-5px) translateX(6px) rotate(5deg);
+  }
+  75% {
+    transform: translateY(-18px) translateX(-4px) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+
+.creature-leaves {
+  width: 40px;
+  height: 40px;
+  top: 12%;
+  right: 8%;
+  animation: leafFloat 12s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------
+   5. Flowers — Subtle Sway Bottom-Left
+   --------------------------------------------------------- */
+@keyframes flowerSway {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    transform: rotate(-3deg) scale(1.02);
+  }
+  40% {
+    transform: rotate(2deg) scale(0.98);
+  }
+  60% {
+    transform: rotate(-1.5deg) scale(1.01);
+  }
+  80% {
+    transform: rotate(1deg) scale(0.99);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.creature-flowers {
+  width: 50px;
+  height: 50px;
+  bottom: 10%;
+  left: 5%;
+  animation: flowerSway 8s ease-in-out infinite;
+  opacity: 0.65;
+  transform-origin: bottom center;
+}
+
+/* ---------------------------------------------------------
+   6. Reduced Motion — Hide everything decorative
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ambient,
+  .creature {
+    display: none;
+  }
+}

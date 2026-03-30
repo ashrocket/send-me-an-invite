@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Spring flower spinner — blooming petals with rotation -->
+  <defs>
+    <linearGradient id="petalGrad1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C3B1E1"/>
+      <stop offset="100%" stop-color="#E8DFF5"/>
+    </linearGradient>
+    <linearGradient id="petalGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB7B2"/>
+      <stop offset="100%" stop-color="#FFE0DE"/>
+    </linearGradient>
+    <linearGradient id="petalGrad3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8E6CF"/>
+      <stop offset="100%" stop-color="#D4F5E9"/>
+    </linearGradient>
+    <linearGradient id="petalGrad4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A0D2DB"/>
+      <stop offset="100%" stop-color="#D3EDF2"/>
+    </linearGradient>
+    <linearGradient id="centerGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFEAA7"/>
+      <stop offset="100%" stop-color="#FFD56B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Petals — arranged in a flower pattern around center -->
+  <!-- Petal 1: top -->
+  <ellipse cx="24" cy="12" rx="5" ry="9" fill="url(#petalGrad1)" opacity="0.85"/>
+  <!-- Petal 2: right -->
+  <ellipse cx="36" cy="24" rx="9" ry="5" fill="url(#petalGrad2)" opacity="0.85"/>
+  <!-- Petal 3: bottom -->
+  <ellipse cx="24" cy="36" rx="5" ry="9" fill="url(#petalGrad3)" opacity="0.85"/>
+  <!-- Petal 4: left -->
+  <ellipse cx="12" cy="24" rx="9" ry="5" fill="url(#petalGrad4)" opacity="0.85"/>
+
+  <!-- Diagonal petals — smaller -->
+  <ellipse cx="32" cy="14" rx="4" ry="7" fill="url(#petalGrad2)" opacity="0.65"
+           transform="rotate(45 32 14)"/>
+  <ellipse cx="32" cy="34" rx="4" ry="7" fill="url(#petalGrad1)" opacity="0.65"
+           transform="rotate(-45 32 34)"/>
+  <ellipse cx="16" cy="34" rx="4" ry="7" fill="url(#petalGrad4)" opacity="0.65"
+           transform="rotate(45 16 34)"/>
+  <ellipse cx="16" cy="14" rx="4" ry="7" fill="url(#petalGrad3)" opacity="0.65"
+           transform="rotate(-45 16 14)"/>
+
+  <!-- Center — warm yellow -->
+  <circle cx="24" cy="24" r="6" fill="url(#centerGrad)"/>
+  <circle cx="22" cy="22" r="1" fill="#FFE0A0" opacity="0.7"/>
+  <circle cx="26" cy="23" r="0.8" fill="#FFE0A0" opacity="0.6"/>
+  <circle cx="24" cy="26" r="0.7" fill="#FFE0A0" opacity="0.5"/>
+</svg>

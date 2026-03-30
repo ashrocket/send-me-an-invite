@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Dragonfly cursor — pastel teal body, translucent lavender wings -->
+
+  <!-- Upper-left wing -->
+  <ellipse cx="8" cy="7" rx="6" ry="3" fill="#C3B1E1" fill-opacity="0.5"
+           transform="rotate(-20 8 7)"/>
+  <!-- Upper-right wing -->
+  <ellipse cx="16" cy="7" rx="6" ry="3" fill="#C3B1E1" fill-opacity="0.5"
+           transform="rotate(20 16 7)"/>
+  <!-- Lower-left wing -->
+  <ellipse cx="9" cy="11" rx="5" ry="2.5" fill="#E8DFF5" fill-opacity="0.45"
+           transform="rotate(-15 9 11)"/>
+  <!-- Lower-right wing -->
+  <ellipse cx="15" cy="11" rx="5" ry="2.5" fill="#E8DFF5" fill-opacity="0.45"
+           transform="rotate(15 15 11)"/>
+
+  <!-- Wing veins — subtle -->
+  <line x1="6" y1="6" x2="11" y2="8" stroke="#C3B1E1" stroke-width="0.3" stroke-opacity="0.6"/>
+  <line x1="18" y1="6" x2="13" y2="8" stroke="#C3B1E1" stroke-width="0.3" stroke-opacity="0.6"/>
+
+  <!-- Body — teal/sky -->
+  <line x1="12" y1="4" x2="12" y2="21" stroke="#7BBEC5" stroke-width="1.8"
+        stroke-linecap="round"/>
+
+  <!-- Body segments -->
+  <circle cx="12" cy="6" r="1" fill="#7BBEC5"/>
+  <circle cx="12" cy="9" r="0.8" fill="#6AACB3"/>
+  <circle cx="12" cy="12" r="0.7" fill="#6AACB3"/>
+  <circle cx="12" cy="15" r="0.6" fill="#5D9DA4"/>
+  <circle cx="12" cy="18" r="0.5" fill="#5D9DA4"/>
+
+  <!-- Head -->
+  <circle cx="12" cy="4" r="1.5" fill="#7BBEC5"/>
+
+  <!-- Eyes -->
+  <circle cx="11" cy="3.5" r="0.6" fill="#4A4A4A"/>
+  <circle cx="13" cy="3.5" r="0.6" fill="#4A4A4A"/>
+  <circle cx="11.2" cy="3.3" r="0.2" fill="#FFFFFF"/>
+  <circle cx="13.2" cy="3.3" r="0.2" fill="#FFFFFF"/>
+
+  <!-- Tail tip -->
+  <circle cx="12" cy="21" r="0.4" fill="#5D9DA4"/>
+</svg>

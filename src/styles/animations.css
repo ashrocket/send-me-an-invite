@@ -1,0 +1,609 @@
+/* =========================================================
+   SPRING SCHEDULING MICROSITE — ANIMATIONS
+   All transforms are compositor-only (transform + opacity).
+   No layout-triggering properties animated.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Custom Dragonfly Cursor
+   --------------------------------------------------------- */
+body {
+  cursor: url('../assets/cursor-dragonfly.svg') 12 12, auto;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+[role="button"],
+.meeting-type-btn,
+.slot-btn,
+.cal-day:not(.disabled),
+.cal-nav-btn,
+.back-btn,
+.btn-primary,
+.btn-secondary {
+  cursor: url('../assets/cursor-dragonfly.svg') 12 12, pointer;
+}
+
+/* ---------------------------------------------------------
+   2. Keyframes — Step Transitions
+   --------------------------------------------------------- */
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stepOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+}
+
+/* ---------------------------------------------------------
+   3. Step Visibility
+   --------------------------------------------------------- */
+.step {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.step.active {
+  display: block;
+  animation: stepIn 0.5s var(--transition-spring) both;
+}
+
+.step.exiting {
+  display: block;
+  animation: stepOut 0.3s var(--transition-ease) both;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   4. Meeting Type Buttons
+   --------------------------------------------------------- */
+.meeting-type-btn {
+  will-change: transform, box-shadow;
+  transition:
+    transform 0.25s var(--transition-spring),
+    box-shadow 0.25s var(--transition-ease),
+    background-color 0.2s var(--transition-ease),
+    border-color 0.2s var(--transition-ease);
+}
+
+.meeting-type-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(195, 177, 225, 0.35);
+  background-color: var(--spring-lavender-light);
+  border-color: var(--spring-lavender);
+}
+
+.meeting-type-btn:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* Gentle shimmer on hover */
+@keyframes btnShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.meeting-type-btn:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: btnShimmer 1.5s ease-in-out;
+  pointer-events: none;
+}
+
+.meeting-type-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   5. Slot Buttons — Pop + Ring Pulse
+   --------------------------------------------------------- */
+@keyframes slotPop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.1); }
+  60%  { transform: scale(0.95); }
+  80%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ringPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(195, 177, 225, 0.55); }
+  70%  { box-shadow: 0 0 0 12px rgba(195, 177, 225, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(195, 177, 225, 0); }
+}
+
+@keyframes slotGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(195, 177, 225, 0.2); }
+  50%      { box-shadow: 0 0 16px rgba(195, 177, 225, 0.4); }
+}
+
+.slot-btn {
+  will-change: transform, box-shadow;
+  transition:
+    transform 0.2s var(--transition-spring),
+    box-shadow 0.2s var(--transition-ease),
+    background-color 0.2s var(--transition-ease),
+    border-color 0.2s var(--transition-ease);
+}
+
+.slot-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(195, 177, 225, 0.3);
+  background-color: var(--spring-lavender-light);
+  border-color: var(--spring-lavender);
+}
+
+.slot-btn.selected {
+  animation:
+    slotPop 0.4s var(--transition-spring) both,
+    ringPulse 1.2s ease-out 0.1s both;
+}
+
+/* Subtle breathing glow on selected slots */
+.slot-btn.selected:not(:hover) {
+  animation:
+    slotPop 0.4s var(--transition-spring) both,
+    ringPulse 1.2s ease-out 0.1s both,
+    slotGlow 3s ease-in-out 1.5s infinite;
+}
+
+/* ---------------------------------------------------------
+   6. Calendar Day Cells
+   --------------------------------------------------------- */
+.cal-day:not(.disabled) {
+  will-change: transform;
+  transition:
+    transform 0.2s var(--transition-spring),
+    background-color 0.15s var(--transition-ease),
+    color 0.15s var(--transition-ease),
+    box-shadow 0.2s var(--transition-ease);
+}
+
+.cal-day:not(.disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(195, 177, 225, 0.2);
+}
+
+.cal-day.selected {
+  animation: slotPop 0.3s var(--transition-spring) both;
+}
+
+/* ---------------------------------------------------------
+   7. Action Buttons — Hover Lift
+   --------------------------------------------------------- */
+.btn-primary,
+.btn-secondary {
+  will-change: transform, box-shadow;
+  transition:
+    transform 0.2s var(--transition-spring),
+    box-shadow 0.2s var(--transition-ease),
+    background-color 0.2s var(--transition-ease),
+    border-color 0.2s var(--transition-ease),
+    opacity 0.2s var(--transition-ease);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(195, 177, 225, 0.4);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.98) translateY(0);
+  transition-duration: 0.08s;
+}
+
+/* Ripple effect on click */
+@keyframes btnRipple {
+  from {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.btn-primary::after,
+.btn-secondary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.btn-primary,
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   8. Floating Label Form Fields
+   --------------------------------------------------------- */
+@keyframes inputFocusBounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.005); }
+  60%  { transform: scale(0.998); }
+  100% { transform: scale(1); }
+}
+
+@keyframes labelFloat {
+  from {
+    transform: translateY(0);
+    font-size: 1rem;
+    color: var(--spring-text-light);
+  }
+  to {
+    transform: translateY(-24px);
+    font-size: 0.75rem;
+    color: var(--spring-lavender);
+  }
+}
+
+@keyframes borderGlow {
+  0%   { box-shadow: 0 0 0 3px rgba(195, 177, 225, 0); }
+  50%  { box-shadow: 0 0 0 3px rgba(195, 177, 225, 0.3); }
+  100% { box-shadow: 0 0 0 3px rgba(195, 177, 225, 0.2); }
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group label {
+  will-change: transform, font-size, color;
+  transition:
+    transform 0.25s var(--transition-spring),
+    font-size 0.25s var(--transition-spring),
+    color 0.2s var(--transition-ease),
+    top 0.25s var(--transition-spring);
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  color: var(--spring-lavender);
+}
+
+.form-group input,
+.form-group textarea {
+  will-change: transform;
+  transition:
+    border-color 0.2s var(--transition-ease),
+    box-shadow 0.2s var(--transition-ease);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  animation: inputFocusBounce 0.3s var(--transition-spring) both;
+  border-color: var(--spring-lavender);
+  box-shadow: 0 0 0 3px rgba(195, 177, 225, 0.2);
+}
+
+/* Underline sweep on focus */
+@keyframes underlineSweep {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.form-group::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: var(--spring-lavender);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s var(--transition-spring);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.form-group:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------
+   9. Loading Spinner
+   --------------------------------------------------------- */
+@keyframes eggSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(90deg) scale(1.08); }
+  50%  { transform: rotate(180deg) scale(1); }
+  75%  { transform: rotate(270deg) scale(1.08); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.egg-spinner {
+  will-change: transform;
+  animation: eggSpin 2s ease-in-out infinite;
+}
+
+/* Button spinner */
+@keyframes spinnerRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.btn-spinner {
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+/* ---------------------------------------------------------
+   10. Confirmation Check Mark
+   --------------------------------------------------------- */
+@keyframes checkPop {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.9) rotate(-2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes checkGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(195, 177, 225, 0.3); }
+  50%      { box-shadow: 0 0 20px 8px rgba(195, 177, 225, 0.15); }
+}
+
+.check-mark {
+  will-change: transform, opacity;
+  animation:
+    checkPop 0.6s var(--transition-spring) 0.2s both,
+    checkGlow 2s ease-in-out 1s infinite;
+}
+
+/* ---------------------------------------------------------
+   11. Staggered Page Load — fadeInUp
+   --------------------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.card-header {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.1s both;
+}
+
+.card-header .avatar {
+  animation: fadeInScale 0.5s var(--transition-spring) 0.15s both;
+}
+
+.card-header h1 {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.2s both;
+}
+
+.card-header .headline {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.28s both;
+}
+
+.step.active .meeting-type-list {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.3s both;
+}
+
+/* Stagger individual meeting type buttons */
+.step.active .meeting-type-btn:nth-child(1) { animation: fadeInUp 0.35s var(--transition-spring) 0.35s both; }
+.step.active .meeting-type-btn:nth-child(2) { animation: fadeInUp 0.35s var(--transition-spring) 0.42s both; }
+.step.active .meeting-type-btn:nth-child(3) { animation: fadeInUp 0.35s var(--transition-spring) 0.49s both; }
+.step.active .meeting-type-btn:nth-child(4) { animation: fadeInUp 0.35s var(--transition-spring) 0.56s both; }
+
+/* Stagger slot buttons */
+.step.active .slot-btn:nth-child(1)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 1 * 0.04s) both; }
+.step.active .slot-btn:nth-child(2)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 2 * 0.04s) both; }
+.step.active .slot-btn:nth-child(3)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 3 * 0.04s) both; }
+.step.active .slot-btn:nth-child(4)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 4 * 0.04s) both; }
+.step.active .slot-btn:nth-child(5)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 5 * 0.04s) both; }
+.step.active .slot-btn:nth-child(6)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 6 * 0.04s) both; }
+.step.active .slot-btn:nth-child(7)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 7 * 0.04s) both; }
+.step.active .slot-btn:nth-child(8)  { animation: fadeInUp 0.3s var(--transition-spring) calc(0.1s + 8 * 0.04s) both; }
+
+/* Stagger calendar day cells entering */
+.step.active .calendar-grid {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.2s both;
+}
+
+/* Form fields stagger */
+.step.active .form-group:nth-child(1) { animation: fadeInUp 0.35s var(--transition-spring) 0.15s both; }
+.step.active .form-group:nth-child(2) { animation: fadeInUp 0.35s var(--transition-spring) 0.22s both; }
+.step.active .form-group:nth-child(3) { animation: fadeInUp 0.35s var(--transition-spring) 0.29s both; }
+.step.active .btn-primary             { animation: fadeInUp 0.35s var(--transition-spring) 0.36s both; }
+
+/* Back button slide in */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.step.active .step-back {
+  animation: slideInLeft 0.3s var(--transition-spring) 0.05s both;
+}
+
+/* ---------------------------------------------------------
+   12. Card entrance
+   --------------------------------------------------------- */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card {
+  animation: cardEntrance 0.6s var(--transition-spring) both;
+}
+
+/* ---------------------------------------------------------
+   13. Back button hover arrow bounce
+   --------------------------------------------------------- */
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-3px); }
+}
+
+.back-btn:hover {
+  animation: arrowBounce 0.4s var(--transition-spring);
+}
+
+/* ---------------------------------------------------------
+   14. Step heading underline reveal
+   --------------------------------------------------------- */
+.step h2 {
+  position: relative;
+  display: inline-block;
+}
+
+.step h2::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--spring-lavender), var(--spring-mint));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--transition-spring);
+  border-radius: 1px;
+}
+
+.step.active h2::after {
+  transform: scaleX(1);
+  transition-delay: 0.3s;
+}
+
+/* ---------------------------------------------------------
+   15. Avatar pulse ring
+   --------------------------------------------------------- */
+@keyframes avatarPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(195, 177, 225, 0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(195, 177, 225, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(195, 177, 225, 0); }
+}
+
+.avatar {
+  animation: avatarPulse 3s ease-in-out 1s infinite;
+  border-radius: 50%;
+}
+
+/* ---------------------------------------------------------
+   16. Calendar nav button press
+   --------------------------------------------------------- */
+.cal-nav-btn {
+  transition:
+    transform 0.15s var(--transition-spring),
+    background-color 0.15s var(--transition-ease),
+    color 0.15s var(--transition-ease);
+}
+
+.cal-nav-btn:active {
+  transform: scale(0.9);
+}
+
+/* ---------------------------------------------------------
+   17. Confirmation step — extra entrance
+   --------------------------------------------------------- */
+.step-confirmation.active .confirm-summary {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.4s both;
+}
+
+.step-confirmation.active .confirm-email {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.5s both;
+}
+
+.step-confirmation.active .btn-secondary {
+  animation: fadeInUp 0.4s var(--transition-spring) 0.6s both;
+}
+
+/* ---------------------------------------------------------
+   18. Tooltip / selection info slide
+   --------------------------------------------------------- */
+.selected-meeting,
+.selected-date,
+.selected-time {
+  transition: opacity 0.2s var(--transition-ease);
+}
+
+/* ---------------------------------------------------------
+   19. Reduced Motion
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

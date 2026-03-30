@@ -1,5 +1,5 @@
 /* =========================================================
-   EASTER SCHEDULING MICROSITE — MAIN CSS
+   SPRING SCHEDULING MICROSITE — MAIN CSS
    Design system: palette, typography, layout, components
    ========================================================= */
 
@@ -7,23 +7,23 @@
    1. CSS Custom Properties
    --------------------------------------------------------- */
 :root {
-  /* Easter palette */
-  --easter-lavender:       #C3B1E1;
-  --easter-lavender-light: #E8DFF5;
-  --easter-mint:           #A8E6CF;
-  --easter-mint-light:     #D4F5E9;
-  --easter-yellow:         #FFEAA7;
-  --easter-yellow-light:   #FFF5D6;
-  --easter-rose:           #FFB7B2;
-  --easter-rose-light:     #FFE0DE;
-  --easter-sky:            #A0D2DB;
-  --easter-sky-light:      #D3EDF2;
-  --easter-cream:          #FFF8E7;
-  --easter-white:          #FFFFFF;
-  --easter-text:           #4A4A4A;
-  --easter-text-light:     #8A8A8A;
-  --easter-border:         #E8E3D9;
-  --easter-shadow:         rgba(195, 177, 225, 0.15);
+  /* Spring palette */
+  --spring-lavender:       #C3B1E1;
+  --spring-lavender-light: #E8DFF5;
+  --spring-mint:           #A8E6CF;
+  --spring-mint-light:     #D4F5E9;
+  --spring-yellow:         #FFEAA7;
+  --spring-yellow-light:   #FFF5D6;
+  --spring-rose:           #FFB7B2;
+  --spring-rose-light:     #FFE0DE;
+  --spring-sky:            #A0D2DB;
+  --spring-sky-light:      #D3EDF2;
+  --spring-cream:          #FFF8E7;
+  --spring-white:          #FFFFFF;
+  --spring-text:           #4A4A4A;
+  --spring-text-light:     #8A8A8A;
+  --spring-border:         #E8E3D9;
+  --spring-shadow:         rgba(195, 177, 225, 0.15);
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -55,8 +55,8 @@ html {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--easter-cream);
-  color: var(--easter-text);
+  background-color: var(--spring-cream);
+  color: var(--spring-text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -98,14 +98,14 @@ textarea {
   opacity: 0.35;
 }
 
-.dot-1 { width: 80px;  height: 80px;  background: var(--easter-lavender);  top: 8%;   left: 5%; }
-.dot-2 { width: 120px; height: 120px; background: var(--easter-mint);       top: 15%;  right: 8%; }
-.dot-3 { width: 60px;  height: 60px;  background: var(--easter-yellow);     top: 40%;  left: 3%; }
-.dot-4 { width: 90px;  height: 90px;  background: var(--easter-rose);       bottom: 20%; left: 10%; }
-.dot-5 { width: 70px;  height: 70px;  background: var(--easter-sky);        bottom: 10%; right: 5%; }
-.dot-6 { width: 50px;  height: 50px;  background: var(--easter-mint);       top: 60%;  right: 12%; }
-.dot-7 { width: 100px; height: 100px; background: var(--easter-yellow);     top: 75%;  left: 20%; }
-.dot-8 { width: 55px;  height: 55px;  background: var(--easter-lavender);   top: 30%;  right: 25%; }
+.dot-1 { width: 80px;  height: 80px;  background: var(--spring-lavender);  top: 8%;   left: 5%; }
+.dot-2 { width: 120px; height: 120px; background: var(--spring-mint);       top: 15%;  right: 8%; }
+.dot-3 { width: 60px;  height: 60px;  background: var(--spring-yellow);     top: 40%;  left: 3%; }
+.dot-4 { width: 90px;  height: 90px;  background: var(--spring-rose);       bottom: 20%; left: 10%; }
+.dot-5 { width: 70px;  height: 70px;  background: var(--spring-sky);        bottom: 10%; right: 5%; }
+.dot-6 { width: 50px;  height: 50px;  background: var(--spring-mint);       top: 60%;  right: 12%; }
+.dot-7 { width: 100px; height: 100px; background: var(--spring-yellow);     top: 75%;  left: 20%; }
+.dot-8 { width: 55px;  height: 55px;  background: var(--spring-lavender);   top: 30%;  right: 25%; }
 
 /* ---------------------------------------------------------
    4. Creatures
@@ -134,10 +134,10 @@ textarea {
    6. Card
    --------------------------------------------------------- */
 .card {
-  background: var(--easter-white);
+  background: var(--spring-white);
   border-radius: var(--card-radius);
   box-shadow:
-    0 4px 6px var(--easter-shadow),
+    0 4px 6px var(--spring-shadow),
     0 10px 40px rgba(195, 177, 225, 0.12),
     0 1px 3px rgba(0, 0, 0, 0.06);
   padding: 32px;
@@ -157,7 +157,7 @@ textarea {
   text-align: center;
   margin-bottom: 28px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--easter-border);
+  border-bottom: 1px solid var(--spring-border);
 }
 
 .avatar {
@@ -166,8 +166,8 @@ textarea {
   border-radius: 50%;
   background: linear-gradient(
     135deg,
-    var(--easter-lavender-light) 0%,
-    var(--easter-lavender) 100%
+    var(--spring-lavender-light) 0%,
+    var(--spring-lavender) 100%
   );
   margin-bottom: 12px;
   flex-shrink: 0;
@@ -176,14 +176,14 @@ textarea {
 .card-header h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--easter-text);
+  color: var(--spring-text);
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
 .card-header .headline {
   font-size: 0.9rem;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   margin-top: 4px;
   font-weight: 400;
 }
@@ -202,7 +202,7 @@ textarea {
 .step h2 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--easter-text);
+  color: var(--spring-text);
   margin-bottom: 16px;
   letter-spacing: -0.01em;
 }
@@ -220,7 +220,7 @@ textarea {
 .back-btn {
   background: none;
   border: none;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   font-size: 0.875rem;
   font-weight: 500;
   padding: 4px 0;
@@ -229,14 +229,14 @@ textarea {
 }
 
 .back-btn:hover {
-  color: var(--easter-text);
+  color: var(--spring-text);
 }
 
 .selected-meeting,
 .selected-date,
 .selected-time {
   font-size: 0.8rem;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   font-weight: 400;
 }
 
@@ -254,10 +254,10 @@ textarea {
   width: 100%;
   text-align: left;
   padding: 16px 20px;
-  border: 2px solid var(--easter-border);
+  border: 2px solid var(--spring-border);
   border-radius: var(--btn-radius);
-  background: var(--easter-white);
-  color: var(--easter-text);
+  background: var(--spring-white);
+  color: var(--spring-text);
   transition:
     background-color 0.2s var(--transition-ease),
     border-color 0.2s var(--transition-ease),
@@ -265,12 +265,12 @@ textarea {
 }
 
 .meeting-type-btn:hover {
-  background-color: var(--easter-lavender-light);
-  border-color: var(--easter-lavender);
+  background-color: var(--spring-lavender-light);
+  border-color: var(--spring-lavender);
 }
 
 .meeting-type-btn:active {
-  border-color: var(--easter-lavender);
+  border-color: var(--spring-lavender);
   transform: scale(0.98);
 }
 
@@ -278,13 +278,13 @@ textarea {
   display: block;
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--easter-text);
+  color: var(--spring-text);
 }
 
 .mt-desc {
   display: block;
   font-size: 0.82rem;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   margin-top: 4px;
   font-weight: 400;
 }
@@ -309,13 +309,13 @@ textarea {
 .cal-nav-title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--easter-text);
+  color: var(--spring-text);
 }
 
 .cal-nav-btn {
   background: none;
   border: none;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   font-size: 1rem;
   padding: 4px 8px;
   border-radius: 6px;
@@ -323,8 +323,8 @@ textarea {
 }
 
 .cal-nav-btn:hover {
-  background-color: var(--easter-lavender-light);
-  color: var(--easter-text);
+  background-color: var(--spring-lavender-light);
+  color: var(--spring-text);
 }
 
 .cal-header {
@@ -334,7 +334,7 @@ textarea {
 .day-name {
   font-size: 0.72rem;
   font-weight: 500;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   text-align: center;
   padding: 6px 2px;
   letter-spacing: 0.02em;
@@ -350,7 +350,7 @@ textarea {
   cursor: pointer;
   border: none;
   background: transparent;
-  color: var(--easter-text);
+  color: var(--spring-text);
   font-family: var(--font-family);
   transition:
     background-color 0.15s var(--transition-ease),
@@ -360,17 +360,17 @@ textarea {
 }
 
 .cal-day:hover:not(.disabled):not(.other-month) {
-  background-color: var(--easter-lavender-light);
+  background-color: var(--spring-lavender-light);
 }
 
 .cal-day.selected {
-  background-color: var(--easter-lavender);
-  color: var(--easter-white);
+  background-color: var(--spring-lavender);
+  color: var(--spring-white);
   font-weight: 600;
 }
 
 .cal-day.today {
-  outline: 2px solid var(--easter-sky);
+  outline: 2px solid var(--spring-sky);
   outline-offset: -2px;
 }
 
@@ -396,12 +396,12 @@ textarea {
 
 .slot-btn {
   padding: 12px 8px;
-  border: 2px solid var(--easter-border);
+  border: 2px solid var(--spring-border);
   border-radius: var(--btn-radius);
   text-align: center;
   cursor: pointer;
-  background: var(--easter-white);
-  color: var(--easter-text);
+  background: var(--spring-white);
+  color: var(--spring-text);
   font-size: 0.875rem;
   font-weight: 500;
   font-family: var(--font-family);
@@ -413,14 +413,14 @@ textarea {
 }
 
 .slot-btn:hover {
-  background-color: var(--easter-lavender-light);
-  border-color: var(--easter-lavender);
+  background-color: var(--spring-lavender-light);
+  border-color: var(--spring-lavender);
 }
 
 .slot-btn.selected {
-  background-color: var(--easter-lavender);
-  color: var(--easter-white);
-  border-color: var(--easter-lavender);
+  background-color: var(--spring-lavender);
+  color: var(--spring-white);
+  border-color: var(--spring-lavender);
   font-weight: 600;
 }
 
@@ -445,7 +445,7 @@ textarea {
 }
 
 .error {
-  color: var(--easter-rose);
+  color: var(--spring-rose);
   text-align: center;
   font-size: 0.875rem;
   padding: 16px;
@@ -453,7 +453,7 @@ textarea {
 }
 
 .no-slots {
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   text-align: center;
   font-size: 0.875rem;
   padding: 16px;
@@ -473,12 +473,12 @@ textarea {
   display: block;
   width: 100%;
   padding: 20px 16px 8px;
-  border: 2px solid var(--easter-border);
+  border: 2px solid var(--spring-border);
   border-radius: var(--btn-radius);
   font-family: var(--font-family);
   font-size: 1rem;
-  background: var(--easter-white);
-  color: var(--easter-text);
+  background: var(--spring-white);
+  color: var(--spring-text);
   outline: none;
   transition:
     border-color 0.2s var(--transition-ease),
@@ -494,7 +494,7 @@ textarea {
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--easter-lavender);
+  border-color: var(--spring-lavender);
   box-shadow: 0 0 0 3px rgba(195, 177, 225, 0.2);
 }
 
@@ -502,7 +502,7 @@ textarea {
   position: absolute;
   left: 16px;
   top: 14px;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   font-size: 1rem;
   font-weight: 400;
   pointer-events: none;
@@ -521,7 +521,7 @@ textarea {
 .form-group textarea:not(:placeholder-shown) + label {
   top: 6px;
   font-size: 0.72rem;
-  color: var(--easter-lavender);
+  color: var(--spring-lavender);
   font-weight: 500;
 }
 
@@ -535,9 +535,9 @@ textarea {
   gap: 8px;
   width: 100%;
   padding: 14px 24px;
-  background-color: var(--easter-lavender);
-  color: var(--easter-white);
-  border: 2px solid var(--easter-lavender);
+  background-color: var(--spring-lavender);
+  color: var(--spring-white);
+  border: 2px solid var(--spring-lavender);
   border-radius: var(--btn-radius);
   font-family: var(--font-family);
   font-size: 1rem;
@@ -574,8 +574,8 @@ textarea {
   width: 100%;
   padding: 14px 24px;
   background-color: transparent;
-  color: var(--easter-lavender);
-  border: 2px solid var(--easter-lavender);
+  color: var(--spring-lavender);
+  border: 2px solid var(--spring-lavender);
   border-radius: var(--btn-radius);
   font-family: var(--font-family);
   font-size: 1rem;
@@ -587,7 +587,7 @@ textarea {
 }
 
 .btn-secondary:hover {
-  background-color: var(--easter-lavender-light);
+  background-color: var(--spring-lavender-light);
 }
 
 .btn-secondary:active {
@@ -599,7 +599,7 @@ textarea {
   width: 18px;
   height: 18px;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: var(--easter-white);
+  border-top-color: var(--spring-white);
   border-radius: 50%;
 }
 
@@ -614,8 +614,8 @@ textarea {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--easter-lavender);
-  color: var(--easter-white);
+  background-color: var(--spring-lavender);
+  color: var(--spring-white);
   font-size: 28px;
   display: flex;
   align-items: center;
@@ -630,14 +630,14 @@ textarea {
 
 .confirm-summary {
   font-size: 0.95rem;
-  color: var(--easter-text);
+  color: var(--spring-text);
   margin-bottom: 8px;
   line-height: 1.6;
 }
 
 .confirm-email {
   font-size: 0.85rem;
-  color: var(--easter-text-light);
+  color: var(--spring-text-light);
   margin-bottom: 24px;
 }
 
