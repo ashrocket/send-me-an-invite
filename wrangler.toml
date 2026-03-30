@@ -1,0 +1,12 @@
+name = "send-me-an-invite"
+compatibility_date = "2026-03-30"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "send-me-an-invite-db"
+database_id = "" # Run: wrangler d1 create send-me-an-invite-db
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "" # Run: wrangler kv namespace create CACHE

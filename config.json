@@ -1,0 +1,29 @@
+{
+  "owner": {
+    "name": "Ashley Raiteri",
+    "timezone": "America/Chicago",
+    "headline": "Engineering Leader"
+  },
+  "meetingTypes": [
+    {
+      "id": "intro",
+      "name": "30-Minute Intro Call",
+      "duration": 30,
+      "description": "Quick intro and initial conversation",
+      "color": "lavender"
+    },
+    {
+      "id": "deep-dive",
+      "name": "60-Minute Deep Dive",
+      "duration": 60,
+      "description": "In-depth technical or strategic discussion",
+      "color": "mint"
+    }
+  ],
+  "availability": {
+    "days": [1, 2, 3, 4, 5],
+    "startHour": 9,
+    "endHour": 17,
+    "bufferMinutes": 15
+  }
+}
