@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Schedule a meeting with Ashley Raiteri — Engineering Leader" />
+  <title>Schedule with Ashley Raiteri</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/animations.css" />
+  <link rel="stylesheet" href="./styles/creatures.css" />
+</head>
+<body>
+
+  <!-- Ambient floating dots -->
+  <div class="ambient" aria-hidden="true">
+    <div class="dot dot-1"></div>
+    <div class="dot dot-2"></div>
+    <div class="dot dot-3"></div>
+    <div class="dot dot-4"></div>
+    <div class="dot dot-5"></div>
+    <div class="dot dot-6"></div>
+    <div class="dot dot-7"></div>
+    <div class="dot dot-8"></div>
+  </div>
+
+  <!-- Easter creatures -->
+  <div class="creature bunny" aria-hidden="true"></div>
+  <div class="creature chick" aria-hidden="true"></div>
+  <div class="creature wobble-egg" aria-hidden="true"></div>
+  <div class="creature butterfly" aria-hidden="true"></div>
+
+  <!-- Main app -->
+  <div id="app">
+    <div class="card">
+
+      <!-- Card header (always visible) -->
+      <div class="card-header">
+        <div class="avatar"></div>
+        <h1>Ashley Raiteri</h1>
+        <p class="headline">Engineering Leader</p>
+      </div>
+
+      <!-- Step 1: Meeting type -->
+      <section class="step step-meeting-type active" data-step="meeting-type">
+        <h2>Select a Meeting</h2>
+        <div class="meeting-type-list">
+          <button class="meeting-type-btn" data-type="intro" type="button">
+            <span class="mt-name">30-Minute Intro Call</span>
+            <span class="mt-desc">Quick intro and initial conversation</span>
+          </button>
+          <button class="meeting-type-btn" data-type="deep-dive" type="button">
+            <span class="mt-name">60-Minute Deep Dive</span>
+            <span class="mt-desc">In-depth technical or strategic discussion</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 2: Date -->
+      <section class="step step-date" data-step="date">
+        <div class="step-back">
+          <button class="back-btn" data-back="meeting-type" type="button" aria-label="Back">&#8592; Back</button>
+          <span class="selected-meeting"></span>
+        </div>
+        <h2>Pick a Date</h2>
+        <div class="calendar-grid" id="calendar"></div>
+      </section>
+
+      <!-- Step 3: Time slots -->
+      <section class="step step-time" data-step="time">
+        <div class="step-back">
+          <button class="back-btn" data-back="date" type="button" aria-label="Back">&#8592; Back</button>
+          <span class="selected-date"></span>
+        </div>
+        <h2>Pick a Time</h2>
+        <div class="slots-container" id="slots">
+          <div class="loading">
+            <img class="egg-spinner" src="/assets/egg-spinner.svg" alt="Loading…" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 4: Details form -->
+      <section class="step step-details" data-step="details">
+        <div class="step-back">
+          <button class="back-btn" data-back="time" type="button" aria-label="Back">&#8592; Back</button>
+          <span class="selected-time"></span>
+        </div>
+        <h2>Your Details</h2>
+        <form id="booking-form" novalidate>
+          <div class="form-group">
+            <input
+              type="text"
+              id="field-name"
+              name="name"
+              placeholder=" "
+              required
+              autocomplete="name"
+            />
+            <label for="field-name">Your Name</label>
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              id="field-email"
+              name="email"
+              placeholder=" "
+              required
+              autocomplete="email"
+            />
+            <label for="field-email">Email Address</label>
+          </div>
+          <div class="form-group">
+            <textarea
+              id="field-notes"
+              name="notes"
+              placeholder=" "
+              rows="3"
+            ></textarea>
+            <label for="field-notes">What would you like to discuss? (optional)</label>
+          </div>
+          <button type="submit" class="btn-primary" id="submit-btn">
+            <span class="btn-text">Schedule Meeting</span>
+            <span class="btn-spinner" aria-hidden="true" hidden></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Step 5: Confirmation -->
+      <section class="step step-confirmation" data-step="confirmation">
+        <div class="check-mark" aria-hidden="true">&#10003;</div>
+        <h2>You're Booked!</h2>
+        <p class="confirm-summary"></p>
+        <p class="confirm-email"></p>
+        <button type="button" class="btn-secondary" id="book-another-btn">
+          Book Another Time
+        </button>
+      </section>
+
+    </div><!-- /.card -->
+  </div><!-- /#app -->
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

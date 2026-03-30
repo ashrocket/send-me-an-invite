@@ -1,0 +1,723 @@
+/* =========================================================
+   EASTER SCHEDULING MICROSITE — MAIN CSS
+   Design system: palette, typography, layout, components
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. CSS Custom Properties
+   --------------------------------------------------------- */
+:root {
+  /* Easter palette */
+  --easter-lavender:       #C3B1E1;
+  --easter-lavender-light: #E8DFF5;
+  --easter-mint:           #A8E6CF;
+  --easter-mint-light:     #D4F5E9;
+  --easter-yellow:         #FFEAA7;
+  --easter-yellow-light:   #FFF5D6;
+  --easter-rose:           #FFB7B2;
+  --easter-rose-light:     #FFE0DE;
+  --easter-sky:            #A0D2DB;
+  --easter-sky-light:      #D3EDF2;
+  --easter-cream:          #FFF8E7;
+  --easter-white:          #FFFFFF;
+  --easter-text:           #4A4A4A;
+  --easter-text-light:     #8A8A8A;
+  --easter-border:         #E8E3D9;
+  --easter-shadow:         rgba(195, 177, 225, 0.15);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shape */
+  --card-radius: 20px;
+  --btn-radius:  12px;
+
+  /* Easing */
+  --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-ease:   cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------------------------------------------------------
+   2. Reset / Base
+   --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--easter-cream);
+  color: var(--easter-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+
+input,
+textarea {
+  font-family: var(--font-family);
+}
+
+/* ---------------------------------------------------------
+   3. Ambient floating dots
+   --------------------------------------------------------- */
+.ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+}
+
+.dot-1 { width: 80px;  height: 80px;  background: var(--easter-lavender);  top: 8%;   left: 5%; }
+.dot-2 { width: 120px; height: 120px; background: var(--easter-mint);       top: 15%;  right: 8%; }
+.dot-3 { width: 60px;  height: 60px;  background: var(--easter-yellow);     top: 40%;  left: 3%; }
+.dot-4 { width: 90px;  height: 90px;  background: var(--easter-rose);       bottom: 20%; left: 10%; }
+.dot-5 { width: 70px;  height: 70px;  background: var(--easter-sky);        bottom: 10%; right: 5%; }
+.dot-6 { width: 50px;  height: 50px;  background: var(--easter-mint);       top: 60%;  right: 12%; }
+.dot-7 { width: 100px; height: 100px; background: var(--easter-yellow);     top: 75%;  left: 20%; }
+.dot-8 { width: 55px;  height: 55px;  background: var(--easter-lavender);   top: 30%;  right: 25%; }
+
+/* ---------------------------------------------------------
+   4. Creatures
+   --------------------------------------------------------- */
+.creature {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   5. App container
+   --------------------------------------------------------- */
+#app {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 24px 16px;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   6. Card
+   --------------------------------------------------------- */
+.card {
+  background: var(--easter-white);
+  border-radius: var(--card-radius);
+  box-shadow:
+    0 4px 6px var(--easter-shadow),
+    0 10px 40px rgba(195, 177, 225, 0.12),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ---------------------------------------------------------
+   7. Card header
+   --------------------------------------------------------- */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--easter-border);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--easter-lavender-light) 0%,
+    var(--easter-lavender) 100%
+  );
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.card-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--easter-text);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.card-header .headline {
+  font-size: 0.9rem;
+  color: var(--easter-text-light);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------
+   8. Steps
+   --------------------------------------------------------- */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+.step h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--easter-text);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------
+   9. Step back nav
+   --------------------------------------------------------- */
+.step-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--easter-text-light);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.2s var(--transition-ease);
+  line-height: 1;
+}
+
+.back-btn:hover {
+  color: var(--easter-text);
+}
+
+.selected-meeting,
+.selected-date,
+.selected-time {
+  font-size: 0.8rem;
+  color: var(--easter-text-light);
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------
+   10. Meeting type buttons
+   --------------------------------------------------------- */
+.meeting-type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meeting-type-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 20px;
+  border: 2px solid var(--easter-border);
+  border-radius: var(--btn-radius);
+  background: var(--easter-white);
+  color: var(--easter-text);
+  transition:
+    background-color 0.2s var(--transition-ease),
+    border-color 0.2s var(--transition-ease),
+    transform 0.15s var(--transition-spring);
+}
+
+.meeting-type-btn:hover {
+  background-color: var(--easter-lavender-light);
+  border-color: var(--easter-lavender);
+}
+
+.meeting-type-btn:active {
+  border-color: var(--easter-lavender);
+  transform: scale(0.98);
+}
+
+.mt-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--easter-text);
+}
+
+.mt-desc {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--easter-text-light);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------
+   11. Calendar grid
+   --------------------------------------------------------- */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cal-nav {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cal-nav-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--easter-text);
+}
+
+.cal-nav-btn {
+  background: none;
+  border: none;
+  color: var(--easter-text-light);
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s var(--transition-ease), color 0.15s var(--transition-ease);
+}
+
+.cal-nav-btn:hover {
+  background-color: var(--easter-lavender-light);
+  color: var(--easter-text);
+}
+
+.cal-header {
+  display: contents;
+}
+
+.day-name {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--easter-text-light);
+  text-align: center;
+  padding: 6px 2px;
+  letter-spacing: 0.02em;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--easter-text);
+  font-family: var(--font-family);
+  transition:
+    background-color 0.15s var(--transition-ease),
+    color 0.15s var(--transition-ease),
+    transform 0.15s var(--transition-spring);
+  font-weight: 400;
+}
+
+.cal-day:hover:not(.disabled):not(.other-month) {
+  background-color: var(--easter-lavender-light);
+}
+
+.cal-day.selected {
+  background-color: var(--easter-lavender);
+  color: var(--easter-white);
+  font-weight: 600;
+}
+
+.cal-day.today {
+  outline: 2px solid var(--easter-sky);
+  outline-offset: -2px;
+}
+
+.cal-day.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
+
+.cal-day.other-month {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   12. Time slots
+   --------------------------------------------------------- */
+.slots-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.slot-btn {
+  padding: 12px 8px;
+  border: 2px solid var(--easter-border);
+  border-radius: var(--btn-radius);
+  text-align: center;
+  cursor: pointer;
+  background: var(--easter-white);
+  color: var(--easter-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--font-family);
+  transition:
+    background-color 0.15s var(--transition-ease),
+    border-color 0.15s var(--transition-ease),
+    color 0.15s var(--transition-ease),
+    transform 0.15s var(--transition-spring);
+}
+
+.slot-btn:hover {
+  background-color: var(--easter-lavender-light);
+  border-color: var(--easter-lavender);
+}
+
+.slot-btn.selected {
+  background-color: var(--easter-lavender);
+  color: var(--easter-white);
+  border-color: var(--easter-lavender);
+  font-weight: 600;
+}
+
+.slot-btn:active {
+  transform: scale(0.96);
+}
+
+/* ---------------------------------------------------------
+   13. Loading / error / no-slots states
+   --------------------------------------------------------- */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  grid-column: 1 / -1;
+}
+
+.egg-spinner {
+  width: 48px;
+  height: 48px;
+}
+
+.error {
+  color: var(--easter-rose);
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 16px;
+  grid-column: 1 / -1;
+}
+
+.no-slots {
+  color: var(--easter-text-light);
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 16px;
+  grid-column: 1 / -1;
+}
+
+/* ---------------------------------------------------------
+   14. Form — floating labels
+   --------------------------------------------------------- */
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+  display: block;
+  width: 100%;
+  padding: 20px 16px 8px;
+  border: 2px solid var(--easter-border);
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  background: var(--easter-white);
+  color: var(--easter-text);
+  outline: none;
+  transition:
+    border-color 0.2s var(--transition-ease),
+    box-shadow 0.2s var(--transition-ease);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  padding-top: 22px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--easter-lavender);
+  box-shadow: 0 0 0 3px rgba(195, 177, 225, 0.2);
+}
+
+.form-group label {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  color: var(--easter-text-light);
+  font-size: 1rem;
+  font-weight: 400;
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.18s var(--transition-ease),
+    font-size 0.18s var(--transition-ease),
+    color 0.18s var(--transition-ease),
+    top 0.18s var(--transition-ease);
+}
+
+/* Float label up when focused or has content */
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:focus + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  top: 6px;
+  font-size: 0.72rem;
+  color: var(--easter-lavender);
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------
+   15. Buttons — primary & secondary
+   --------------------------------------------------------- */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: var(--easter-lavender);
+  color: var(--easter-white);
+  border: 2px solid var(--easter-lavender);
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--transition-ease),
+    border-color 0.2s var(--transition-ease),
+    transform 0.15s var(--transition-spring),
+    box-shadow 0.2s var(--transition-ease);
+}
+
+.btn-primary:hover {
+  background-color: #b09fd4;
+  border-color: #b09fd4;
+  box-shadow: 0 4px 16px rgba(195, 177, 225, 0.4);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: transparent;
+  color: var(--easter-lavender);
+  border: 2px solid var(--easter-lavender);
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--transition-ease),
+    transform 0.15s var(--transition-spring);
+}
+
+.btn-secondary:hover {
+  background-color: var(--easter-lavender-light);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Submit button spinner */
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: var(--easter-white);
+  border-radius: 50%;
+}
+
+/* ---------------------------------------------------------
+   16. Confirmation step
+   --------------------------------------------------------- */
+.step-confirmation {
+  text-align: center;
+}
+
+.check-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--easter-lavender);
+  color: var(--easter-white);
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-weight: 700;
+}
+
+.step-confirmation h2 {
+  margin-bottom: 12px;
+}
+
+.confirm-summary {
+  font-size: 0.95rem;
+  color: var(--easter-text);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.confirm-email {
+  font-size: 0.85rem;
+  color: var(--easter-text-light);
+  margin-bottom: 24px;
+}
+
+/* ---------------------------------------------------------
+   17. Confetti canvas
+   --------------------------------------------------------- */
+#confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ---------------------------------------------------------
+   18. Responsive
+   --------------------------------------------------------- */
+@media (max-width: 500px) {
+  #app {
+    padding: 12px 8px;
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .card-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .step h2 {
+    font-size: 1rem;
+  }
+
+  .meeting-type-btn {
+    padding: 14px 16px;
+  }
+
+  .mt-name {
+    font-size: 0.9rem;
+  }
+
+  .slots-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .slot-btn {
+    font-size: 0.8rem;
+    padding: 10px 6px;
+  }
+
+  .cal-day {
+    font-size: 0.78rem;
+  }
+
+  .day-name {
+    font-size: 0.65rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.95rem;
+    padding: 13px 20px;
+  }
+}
+
+/* ---------------------------------------------------------
+   19. Reduced motion
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
