@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set Up Your Calendar — Agentical</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/animations.css" />
+  <style>
+    /* Setup-specific styles */
+    .setup-progress {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--spring-border);
+      transition: background-color 0.3s var(--transition-ease);
+    }
+    .progress-dot.active {
+      background: var(--spring-lavender);
+    }
+    .progress-dot.done {
+      background: var(--spring-mint);
+    }
+    .hero-tagline {
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-align: center;
+      color: var(--spring-text);
+      margin-bottom: 8px;
+    }
+    .hero-sub {
+      font-size: 0.9rem;
+      text-align: center;
+      color: var(--spring-text-light);
+      margin-bottom: 28px;
+    }
+    .connect-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--spring-white);
+      border: 2px solid var(--spring-border);
+      border-radius: var(--btn-radius);
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s, transform 0.15s var(--transition-spring);
+    }
+    .connect-btn:hover {
+      border-color: var(--spring-lavender);
+      background: var(--spring-lavender-light);
+    }
+    .connect-btn:active { transform: scale(0.98); }
+    .connect-btn.connected {
+      border-color: var(--spring-mint);
+      background: var(--spring-mint-light);
+      pointer-events: none;
+    }
+    .calendar-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .calendar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--spring-border);
+      border-radius: 8px;
+      font-size: 0.88rem;
+    }
+    .calendar-item input[type="checkbox"] {
+      accent-color: var(--spring-lavender);
+    }
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .theme-card {
+      padding: 14px;
+      border: 2px solid var(--spring-border);
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.15s var(--transition-spring);
+    }
+    .theme-card:hover { border-color: var(--spring-lavender); transform: translateY(-2px); }
+    .theme-card.selected { border-color: var(--spring-lavender); background: var(--spring-lavender-light); }
+    .theme-swatch {
+      width: 100%;
+      height: 32px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .theme-card-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--spring-text);
+    }
+    .tier-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tier-card {
+      padding: 18px;
+      border: 2px solid var(--spring-border);
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s var(--transition-spring);
+    }
+    .tier-card:hover { border-color: var(--spring-lavender); }
+    .tier-card.selected { border-color: var(--spring-lavender); background: var(--spring-lavender-light); }
+    .tier-name {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .tier-price {
+      font-size: 0.85rem;
+      color: var(--spring-text-light);
+      margin-bottom: 8px;
+    }
+    .tier-desc {
+      font-size: 0.82rem;
+      color: var(--spring-text-light);
+    }
+    .done-url {
+      background: var(--spring-lavender-light);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--spring-border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--spring-text-light);
+      transition: background-color 0.15s;
+    }
+    .copy-btn:hover { background: var(--spring-lavender-light); }
+    .meeting-type-editor { margin-bottom: 16px; }
+    .meeting-type-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .meeting-type-row input, .meeting-type-row select {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid var(--spring-border);
+      border-radius: 8px;
+      font-family: var(--font-family);
+      font-size: 0.85rem;
+    }
+    .remove-type-btn {
+      background: none;
+      border: none;
+      color: var(--spring-rose);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="card">
+
+      <!-- Progress dots -->
+      <div class="setup-progress" id="progress">
+        <div class="progress-dot active" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+      </div>
+
+      <!-- Step 1: Welcome -->
+      <section class="step active" data-step="welcome">
+        <p class="hero-tagline">Your calendar, your agent, your rules.</p>
+        <p class="hero-sub">Set up your own scheduling page in under 2 minutes.</p>
+        <button type="button" class="btn-primary" id="start-btn">
+          <span class="btn-text">Get Started</span>
+        </button>
+        <p style="text-align: center; margin-top: 16px;">
+          <a href="/manage" style="color: var(--spring-text-light); font-size: 0.85rem; text-decoration: none;">I have a booking code</a>
+        </p>
+      </section>
+
+      <!-- Step 2: Connect Google Calendar -->
+      <section class="step" data-step="google">
+        <div class="step-back">
+          <button class="back-btn" data-back="welcome" type="button">&#8592; Back</button>
+        </div>
+        <h2>Connect Google Calendar</h2>
+        <p style="color: var(--spring-text-light); font-size: 0.88rem; margin-bottom: 16px;">
+          We'll check your calendar for availability and create events when someone books.
+        </p>
+        <button type="button" class="connect-btn" id="connect-google-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Connect Google Calendar
+        </button>
+        <div class="calendar-list" id="calendar-list" hidden>
+          <!-- Populated by JS after OAuth -->
+        </div>
+        <button type="button" class="btn-primary" id="google-next-btn" style="margin-top: 20px;" disabled>
+          <span class="btn-text">Continue</span>
+        </button>
+      </section>
+
+      <!-- Step 3: Profile -->
+      <section class="step" data-step="profile">
+        <div class="step-back">
+          <button class="back-btn" data-back="google" type="button">&#8592; Back</button>
+        </div>
+        <h2>Your Profile</h2>
+        <form id="profile-form" novalidate>
+          <div class="form-group">
+            <input type="text" id="setup-name" name="name" placeholder=" " required />
+            <label for="setup-name">Your Name</label>
+          </div>
+          <div class="form-group">
+            <input type="text" id="setup-headline" name="headline" placeholder=" " />
+            <label for="setup-headline">Headline (e.g. Engineering Leader)</label>
+          </div>
+
+          <h3 style="font-size: 0.95rem; margin-bottom: 12px; margin-top: 20px;">Meeting Types</h3>
+          <div class="meeting-type-editor" id="meeting-types-editor">
+            <div class="meeting-type-row">
+              <input type="text" placeholder="Name" value="30-Minute Intro Call" />
+              <select>
+                <option value="15">15m</option>
+                <option value="30" selected>30m</option>
+                <option value="45">45m</option>
+                <option value="60">60m</option>
+              </select>
+              <button type="button" class="remove-type-btn" title="Remove">&#10005;</button>
+            </div>
+            <div class="meeting-type-row">
+              <input type="text" placeholder="Name" value="60-Minute Deep Dive" />
+              <select>
+                <option value="15">15m</option>
+                <option value="30">30m</option>
+                <option value="45">45m</option>
+                <option value="60" selected>60m</option>
+              </select>
+              <button type="button" class="remove-type-btn" title="Remove">&#10005;</button>
+            </div>
+          </div>
+          <button type="button" class="btn-secondary" id="add-type-btn" style="font-size: 0.85rem; padding: 8px 16px; margin-bottom: 20px;">+ Add Meeting Type</button>
+
+          <h3 style="font-size: 0.95rem; margin-bottom: 12px;">Available Hours</h3>
+          <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <select id="setup-start-hour" style="width: 100%; padding: 12px; border: 2px solid var(--spring-border); border-radius: var(--btn-radius); font-family: var(--font-family);">
+                <option value="8">8:00 AM</option>
+                <option value="9" selected>9:00 AM</option>
+                <option value="10">10:00 AM</option>
+              </select>
+            </div>
+            <span style="align-self: center; color: var(--spring-text-light);">to</span>
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <select id="setup-end-hour" style="width: 100%; padding: 12px; border: 2px solid var(--spring-border); border-radius: var(--btn-radius); font-family: var(--font-family);">
+                <option value="16">4:00 PM</option>
+                <option value="17" selected>5:00 PM</option>
+                <option value="18">6:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Continue</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Step 4: Theme -->
+      <section class="step" data-step="theme">
+        <div class="step-back">
+          <button class="back-btn" data-back="profile" type="button">&#8592; Back</button>
+        </div>
+        <h2>Choose a Theme</h2>
+        <div class="theme-grid" id="theme-grid">
+          <!-- Populated by JS -->
+        </div>
+        <p style="text-align: center; margin-bottom: 16px;">
+          <a href="#" id="skip-theme" style="color: var(--spring-text-light); font-size: 0.85rem; text-decoration: none;">I'll customize later with my agent</a>
+        </p>
+        <button type="button" class="btn-primary" id="theme-next-btn">
+          <span class="btn-text">Continue</span>
+        </button>
+      </section>
+
+      <!-- Step 5: Hosting -->
+      <section class="step" data-step="hosting">
+        <div class="step-back">
+          <button class="back-btn" data-back="theme" type="button">&#8592; Back</button>
+        </div>
+        <h2>Where to Host</h2>
+        <div class="tier-cards">
+          <div class="tier-card selected" data-tier="hosted">
+            <div class="tier-name">Hosted</div>
+            <div class="tier-price">$3/year or $1.50/quarter</div>
+            <div class="tier-desc">We host it. Zero setup. Your calendar at <strong>yourname.agentical.com</strong></div>
+            <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
+              <input type="text" id="setup-subdomain" placeholder=" " style="font-size: 0.9rem;" />
+              <label for="setup-subdomain">Choose your subdomain</label>
+            </div>
+          </div>
+          <div class="tier-card" data-tier="selfhost">
+            <div class="tier-name">Self-Hosted</div>
+            <div class="tier-price">Free forever</div>
+            <div class="tier-desc">Deploy to your own Cloudflare account. Full control.</div>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" id="hosting-next-btn" style="margin-top: 20px;">
+          <span class="btn-text">Continue</span>
+        </button>
+      </section>
+
+      <!-- Step 6: Done -->
+      <section class="step" data-step="done">
+        <div class="check-mark" aria-hidden="true">&#10003;</div>
+        <h2>You're Live!</h2>
+        <div class="done-url" id="done-url">yourname.agentical.com</div>
+        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 20px;">
+          <button type="button" class="copy-btn" id="copy-url-btn">Copy URL</button>
+          <button type="button" class="copy-btn" id="copy-mcp-btn">Copy MCP Config</button>
+        </div>
+        <p style="text-align: center; color: var(--spring-text-light); font-size: 0.85rem; margin-bottom: 24px;">
+          Share your MCP endpoint with other AI agents to let them book time with you.
+        </p>
+        <a href="/" class="btn-primary" style="text-decoration: none; text-align: center;">
+          <span class="btn-text">View Your Calendar</span>
+        </a>
+      </section>
+
+    </div>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <script type="module" src="./js/setup.js"></script>
+</body>
+</html>
