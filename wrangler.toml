@@ -1,12 +1,18 @@
-name = "send-me-an-invite"
+name = "agentical"
 compatibility_date = "2026-03-30"
 pages_build_output_dir = "dist"
 
+# D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "send-me-an-invite-db"
-database_id = "" # Run: wrangler d1 create send-me-an-invite-db
+database_name = "agentical"
+database_id = "" # fill after: wrangler d1 create agentical
 
+# KV Namespace (token cache)
 [[kv_namespaces]]
 binding = "CACHE"
-id = "" # Run: wrangler kv namespace create CACHE
+id = "" # fill after: wrangler kv:namespace create CACHE
+
+[vars]
+ENVIRONMENT = "development"
+BASE_URL = "http://localhost:8788"
