@@ -1,0 +1,32 @@
+{
+  "name": "Sunset",
+  "colors": {
+    "primary": "#F97316",
+    "primary-light": "#FB923C",
+    "accent": "#EC4899",
+    "accent-light": "#F472B6",
+    "background": "#FFF7ED",
+    "surface": "#FFFFFF",
+    "text": "#431407",
+    "text-muted": "#7C2D12",
+    "border": "#FED7AA",
+    "shadow": "rgba(249, 115, 22, 0.2)",
+    "success": "#16A34A",
+    "error": "#DC2626"
+  },
+  "fonts": {
+    "body": "DM Sans",
+    "heading": "DM Sans",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "16px",
+    "btn-radius": "16px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": true,
+    "creatures": false,
+    "confetti-colors": ["#F97316", "#EC4899", "#FBBF24", "#A855F7", "#FB923C"]
+  }
+}

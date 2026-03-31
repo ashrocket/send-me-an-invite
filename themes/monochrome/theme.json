@@ -1,0 +1,32 @@
+{
+  "name": "Monochrome",
+  "colors": {
+    "primary": "#111111",
+    "primary-light": "#333333",
+    "accent": "#666666",
+    "accent-light": "#888888",
+    "background": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "text": "#111111",
+    "text-muted": "#666666",
+    "border": "#E0E0E0",
+    "shadow": "rgba(0, 0, 0, 0.1)",
+    "success": "#333333",
+    "error": "#111111"
+  },
+  "fonts": {
+    "body": "Inter",
+    "heading": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "8px",
+    "btn-radius": "8px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": false,
+    "creatures": false,
+    "confetti-colors": ["#111111", "#333333", "#666666", "#999999", "#CCCCCC"]
+  }
+}

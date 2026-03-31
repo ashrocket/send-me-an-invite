@@ -1,0 +1,32 @@
+{
+  "name": "Midnight",
+  "colors": {
+    "primary": "#7C5CFC",
+    "primary-light": "#A585FD",
+    "accent": "#5B8DEF",
+    "accent-light": "#85AEFF",
+    "background": "#0F0E17",
+    "surface": "#1A1A2E",
+    "text": "#FFFFFE",
+    "text-muted": "#A7A9BE",
+    "border": "#2E2E4A",
+    "shadow": "rgba(124, 92, 252, 0.3)",
+    "success": "#5BEFA8",
+    "error": "#FF4D6D"
+  },
+  "fonts": {
+    "body": "Inter",
+    "heading": "Space Grotesk",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "16px",
+    "btn-radius": "16px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": true,
+    "creatures": false,
+    "confetti-colors": ["#7C5CFC", "#5B8DEF", "#A585FD", "#85AEFF", "#5BEFA8"]
+  }
+}

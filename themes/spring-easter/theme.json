@@ -1,0 +1,32 @@
+{
+  "name": "Spring Easter",
+  "colors": {
+    "primary": "#C3B1E1",
+    "primary-light": "#DDD5F3",
+    "accent": "#A8E6CF",
+    "accent-light": "#C8F5E3",
+    "background": "#FFF8E7",
+    "surface": "#FFFFFF",
+    "text": "#3D2C5A",
+    "text-muted": "#8B7BA8",
+    "border": "#E8D9F7",
+    "shadow": "rgba(195, 177, 225, 0.25)",
+    "success": "#A8E6CF",
+    "error": "#F4A0A0"
+  },
+  "fonts": {
+    "body": "Inter",
+    "heading": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "20px",
+    "btn-radius": "20px"
+  },
+  "effects": {
+    "cursor": "dragonfly",
+    "ambient-dots": true,
+    "creatures": true,
+    "confetti-colors": ["#C3B1E1", "#A8E6CF", "#FFD6E0", "#FFF3B0", "#B5EAD7"]
+  }
+}

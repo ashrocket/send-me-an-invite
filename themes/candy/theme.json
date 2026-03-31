@@ -1,0 +1,32 @@
+{
+  "name": "Candy",
+  "colors": {
+    "primary": "#FF6B9D",
+    "primary-light": "#FF8FB3",
+    "accent": "#FFE66D",
+    "accent-light": "#FFF0A0",
+    "background": "#FFF0F5",
+    "surface": "#FFFFFF",
+    "text": "#2D2D2D",
+    "text-muted": "#7A7A7A",
+    "border": "#FFD6E7",
+    "shadow": "rgba(255, 107, 157, 0.2)",
+    "success": "#7BDB84",
+    "error": "#FF4757"
+  },
+  "fonts": {
+    "body": "Nunito",
+    "heading": "Nunito",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "24px",
+    "btn-radius": "24px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": true,
+    "creatures": true,
+    "confetti-colors": ["#FF6B9D", "#FFE66D", "#7BDB84", "#74C2FF", "#C77DFF"]
+  }
+}

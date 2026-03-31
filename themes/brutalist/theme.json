@@ -1,0 +1,32 @@
+{
+  "name": "Brutalist",
+  "colors": {
+    "primary": "#1A1A1A",
+    "primary-light": "#333333",
+    "accent": "#FF3333",
+    "accent-light": "#FF6666",
+    "background": "#FFFFFF",
+    "surface": "#F5F5F5",
+    "text": "#1A1A1A",
+    "text-muted": "#555555",
+    "border": "#1A1A1A",
+    "shadow": "rgba(0, 0, 0, 0.5)",
+    "success": "#00AA00",
+    "error": "#FF3333"
+  },
+  "fonts": {
+    "body": "JetBrains Mono",
+    "heading": "JetBrains Mono",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "0px",
+    "btn-radius": "0px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": false,
+    "creatures": false,
+    "confetti-colors": ["#1A1A1A", "#FF3333", "#FFFFFF", "#555555", "#FF6666"]
+  }
+}

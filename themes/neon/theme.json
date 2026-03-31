@@ -1,0 +1,32 @@
+{
+  "name": "Neon",
+  "colors": {
+    "primary": "#FF2D95",
+    "primary-light": "#FF5CAD",
+    "accent": "#00F0FF",
+    "accent-light": "#4FF7FF",
+    "background": "#0A0A0F",
+    "surface": "#14141F",
+    "text": "#F0F0F0",
+    "text-muted": "#9090A0",
+    "border": "#2A2A3F",
+    "shadow": "rgba(255, 45, 149, 0.35)",
+    "success": "#00F0FF",
+    "error": "#FF2D95"
+  },
+  "fonts": {
+    "body": "Space Mono",
+    "heading": "Orbitron",
+    "mono": "Space Mono"
+  },
+  "shape": {
+    "card-radius": "12px",
+    "btn-radius": "12px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": true,
+    "creatures": false,
+    "confetti-colors": ["#FF2D95", "#00F0FF", "#FFE600", "#BF00FF", "#FF5CAD"]
+  }
+}

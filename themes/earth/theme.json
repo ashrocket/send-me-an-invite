@@ -1,0 +1,32 @@
+{
+  "name": "Earth",
+  "colors": {
+    "primary": "#2D6A4F",
+    "primary-light": "#40916C",
+    "accent": "#A47148",
+    "accent-light": "#C49A6C",
+    "background": "#FAF3E0",
+    "surface": "#FFFFFF",
+    "text": "#3D2C2C",
+    "text-muted": "#7A5C4A",
+    "border": "#D9C5A0",
+    "shadow": "rgba(45, 106, 79, 0.15)",
+    "success": "#2D6A4F",
+    "error": "#9B2226"
+  },
+  "fonts": {
+    "body": "Inter",
+    "heading": "Merriweather",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "10px",
+    "btn-radius": "10px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": true,
+    "creatures": false,
+    "confetti-colors": ["#2D6A4F", "#A47148", "#D4A574", "#74C69D", "#B7E4C7"]
+  }
+}

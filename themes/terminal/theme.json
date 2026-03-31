@@ -1,0 +1,32 @@
+{
+  "name": "Terminal",
+  "colors": {
+    "primary": "#00FF41",
+    "primary-light": "#00CC33",
+    "accent": "#008F11",
+    "accent-light": "#00BB22",
+    "background": "#0D0208",
+    "surface": "#1A1A1A",
+    "text": "#00FF41",
+    "text-muted": "#008F11",
+    "border": "#00FF41",
+    "shadow": "rgba(0, 255, 65, 0.2)",
+    "success": "#00FF41",
+    "error": "#FF3333"
+  },
+  "fonts": {
+    "body": "JetBrains Mono",
+    "heading": "JetBrains Mono",
+    "mono": "JetBrains Mono"
+  },
+  "shape": {
+    "card-radius": "4px",
+    "btn-radius": "4px"
+  },
+  "effects": {
+    "cursor": "default",
+    "ambient-dots": false,
+    "creatures": false,
+    "confetti-colors": ["#00FF41", "#008F11", "#00CC33", "#00BB22", "#0D0208"]
+  }
+}
