@@ -1,5 +1,9 @@
 import './creatures.js';
+import { loadTheme, getConfettiColors } from './theme-loader.js';
 import { fetchMeetingTypes, fetchAvailability, submitBooking } from './api.js';
+
+// Load theme on startup
+const currentTheme = await loadTheme();
 
 // ---------------------------------------------------------------------------
 // State
@@ -306,7 +310,7 @@ function launchConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const colors = ['#C3B1E1', '#A8E6CF', '#FFEAA7', '#FFB7B2', '#A0D2DB'];
+  const colors = getConfettiColors(currentTheme);
   const pieces = Array.from({ length: 120 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height - canvas.height,

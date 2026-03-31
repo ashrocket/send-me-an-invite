@@ -1,3 +1,6 @@
+import { loadTheme } from './theme-loader.js';
+loadTheme();
+
 const IS_DEV = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 // ---------------------------------------------------------------------------

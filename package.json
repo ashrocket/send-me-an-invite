@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "deploy": "npm run build && wrangler pages deploy dist",
-    "mcp": "node mcp/server.js"
+    "mcp": "node mcp/server.js",
+    "setup-oauth": "node scripts/setup-oauth.js"
   },
   "devDependencies": {
     "vite": "^6.2.0",
