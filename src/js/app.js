@@ -1,38 +1,60 @@
 import './creatures.js';
-import { getAvailableSlots, getMockUser } from '../../test/mock-calendars.js';
+import { fetchMeetingTypes, fetchAvailability, submitBooking } from './api.js';
 
 // ---------------------------------------------------------------------------
 // State
 // ---------------------------------------------------------------------------
 const state = {
-  userId: 'ashley',  // Current mock user (swap to test different calendars)
   meetingType: null,
+  meetingTypes: {},      // loaded from API
+  meetingTypesList: [],  // array form
   date: null,
   time: null,
   currentMonth: new Date().getMonth(),
   currentYear: new Date().getFullYear(),
 };
 
-const config = {
-  meetingTypes: {
-    intro:       { name: '30-Minute Intro Call', duration: 30 },
-    'deep-dive': { name: '60-Minute Deep Dive', duration: 60 },
-  },
-  bufferMinutes: 15,
-};
-
-// Load user info into header
-function loadUser() {
-  const user = getMockUser(state.userId);
-  if (!user) return;
-  document.querySelector('.card-header h1').textContent = user.name;
-  document.querySelector('.card-header .headline').textContent = user.headline;
+// ---------------------------------------------------------------------------
+// Initialize — load meeting types from API
+// ---------------------------------------------------------------------------
+async function init() {
+  try {
+    const data = await fetchMeetingTypes();
+    state.meetingTypesList = data.types;
+    state.meetingTypes = {};
+    for (const t of data.types) {
+      state.meetingTypes[t.id] = t;
+    }
+    renderMeetingTypes();
+  } catch (err) {
+    console.error('Failed to load meeting types:', err);
+  }
 }
 
-loadUser();
+function renderMeetingTypes() {
+  const list = document.querySelector('.meeting-type-list');
+  list.innerHTML = state.meetingTypesList.map(t => `
+    <button class="meeting-type-btn" data-type="${t.id}" type="button">
+      <span class="mt-name">${t.name}</span>
+      <span class="mt-desc">${t.description || ''}</span>
+    </button>
+  `).join('');
+
+  list.querySelectorAll('.meeting-type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.meetingType = btn.dataset.type;
+      document.querySelector('.selected-meeting').textContent =
+        state.meetingTypes[state.meetingType].name;
+      renderCalendar();
+      goToStep('date');
+    });
+  });
+}
+
+init();
 
 // ---------------------------------------------------------------------------
-// Step navigation
+// Step navigation (unchanged)
 // ---------------------------------------------------------------------------
 function goToStep(name) {
   const current = document.querySelector('.step.active');
@@ -51,19 +73,6 @@ function goToStep(name) {
     next.classList.add('active');
   });
 }
-
-// ---------------------------------------------------------------------------
-// Meeting type selection
-// ---------------------------------------------------------------------------
-document.querySelectorAll('.meeting-type-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    state.meetingType = btn.dataset.type;
-    document.querySelector('.selected-meeting').textContent =
-      config.meetingTypes[state.meetingType].name;
-    renderCalendar();
-    goToStep('date');
-  });
-});
 
 // ---------------------------------------------------------------------------
 // Back buttons
@@ -111,20 +120,12 @@ function renderCalendar() {
     const isToday = date.toDateString() === today.toDateString();
     const isSelected = state.date && date.toDateString() === state.date.toDateString();
 
-    // Check if any slots exist on this day
-    let hasSlots = false;
-    if (isWeekday && !isPast) {
-      const duration = config.meetingTypes[state.meetingType].duration;
-      const slots = getAvailableSlots(state.userId, date, duration, config.bufferMinutes);
-      hasSlots = slots.length > 0;
-    }
-
     const classes = ['cal-day'];
-    if (!isWeekday || isPast || !hasSlots) classes.push('disabled');
+    if (!isWeekday || isPast) classes.push('disabled');
     if (isToday) classes.push('today');
     if (isSelected) classes.push('selected');
 
-    html += `<button class="${classes.join(' ')}" data-date="${year}-${month}-${d}" type="button">${d}</button>`;
+    html += `<button class="${classes.join(' ')}" data-date="${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}" type="button">${d}</button>`;
   }
 
   cal.innerHTML = html;
@@ -143,7 +144,7 @@ function renderCalendar() {
   cal.querySelectorAll('.cal-day:not(.disabled):not(.other-month)').forEach(day => {
     day.addEventListener('click', () => {
       const [y, m, d] = day.dataset.date.split('-').map(Number);
-      state.date = new Date(y, m, d);
+      state.date = new Date(y, m - 1, d);
       const opts = { weekday: 'long', month: 'long', day: 'numeric' };
       document.querySelector('.selected-date').textContent =
         state.date.toLocaleDateString('en-US', opts);
@@ -154,7 +155,7 @@ function renderCalendar() {
 }
 
 // ---------------------------------------------------------------------------
-// Time slots — grouped by morning/afternoon, top-of-hour preferred
+// Time slots — now fetched from API
 // ---------------------------------------------------------------------------
 function formatTime(hourFloat) {
   const h = Math.floor(hourFloat);
@@ -164,58 +165,63 @@ function formatTime(hourFloat) {
   return `${display}:${String(m).padStart(2, '0')} ${period}`;
 }
 
-function renderSlots() {
+async function renderSlots() {
   const container = document.getElementById('slots');
-  const duration = config.meetingTypes[state.meetingType].duration;
-  const slots = getAvailableSlots(state.userId, state.date, duration, config.bufferMinutes);
+  const mt = state.meetingTypes[state.meetingType];
 
-  if (slots.length === 0) {
-    container.innerHTML = `<div class="no-slots">No available times on this day</div>`;
-    return;
-  }
+  // Show loading
+  container.innerHTML = `<div class="loading"><img class="egg-spinner" src="/assets/egg-spinner.svg" alt="Loading\u2026" /></div>`;
 
-  // Split into morning (before 12) and afternoon (12+)
-  const morning = slots.filter(s => s < 12);
-  const afternoon = slots.filter(s => s >= 12);
+  try {
+    const data = await fetchAvailability(state.date, state.meetingType, mt.duration);
+    const slots = data.slots;
 
-  // If 3 or fewer total slots, show them flat (no grouping needed)
-  if (slots.length <= 3) {
-    container.innerHTML = `
-      <div class="slots-flat">
-        ${slots.map(s => slotButton(s)).join('')}
-      </div>
-    `;
+    if (!slots || slots.length === 0) {
+      container.innerHTML = `<div class="no-slots">No available times on this day</div>`;
+      return;
+    }
+
+    const morning = slots.filter(s => s < 12);
+    const afternoon = slots.filter(s => s >= 12);
+
+    if (slots.length <= 3) {
+      container.innerHTML = `
+        <div class="slots-flat">
+          ${slots.map(s => slotButton(s)).join('')}
+        </div>
+      `;
+      bindSlotClicks(container);
+      return;
+    }
+
+    let html = '';
+    if (morning.length > 0) {
+      html += `
+        <div class="slot-group">
+          <div class="slot-group-label">Morning</div>
+          <div class="slot-group-grid">
+            ${morning.map(s => slotButton(s)).join('')}
+          </div>
+        </div>
+      `;
+    }
+    if (afternoon.length > 0) {
+      html += `
+        <div class="slot-group">
+          <div class="slot-group-label">Afternoon</div>
+          <div class="slot-group-grid">
+            ${afternoon.map(s => slotButton(s)).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = html;
     bindSlotClicks(container);
-    return;
+  } catch (err) {
+    console.error('Failed to load slots:', err);
+    container.innerHTML = `<div class="error">Failed to load available times. Please try again.</div>`;
   }
-
-  // Grouped view: morning + afternoon sections
-  let html = '';
-
-  if (morning.length > 0) {
-    html += `
-      <div class="slot-group">
-        <div class="slot-group-label">Morning</div>
-        <div class="slot-group-grid">
-          ${morning.map(s => slotButton(s)).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  if (afternoon.length > 0) {
-    html += `
-      <div class="slot-group">
-        <div class="slot-group-label">Afternoon</div>
-        <div class="slot-group-grid">
-          ${afternoon.map(s => slotButton(s)).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  container.innerHTML = html;
-  bindSlotClicks(container);
 }
 
 function slotButton(hourFloat) {
@@ -238,13 +244,14 @@ function bindSlotClicks(container) {
 }
 
 // ---------------------------------------------------------------------------
-// Form submission
+// Form submission — now calls API
 // ---------------------------------------------------------------------------
-document.getElementById('booking-form').addEventListener('submit', (e) => {
+document.getElementById('booking-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const form = e.target;
   const name = form.name.value.trim();
   const email = form.email.value.trim();
+  const notes = form.notes ? form.notes.value.trim() : '';
 
   if (!name || !email) return;
 
@@ -253,26 +260,31 @@ document.getElementById('booking-form').addEventListener('submit', (e) => {
   btn.querySelector('.btn-spinner').hidden = false;
   btn.disabled = true;
 
-  setTimeout(() => {
-    const dateStr = state.date.toLocaleDateString('en-US', {
-      weekday: 'long', month: 'long', day: 'numeric'
+  try {
+    const result = await submitBooking({
+      meetingType: state.meetingType,
+      date: state.date,
+      startHour: state.time,
+      name,
+      email,
+      notes,
     });
-    const timeStr = formatTime(state.time);
-    const meetingName = config.meetingTypes[state.meetingType].name;
 
-    document.querySelector('.confirm-summary').textContent =
-      `${meetingName} on ${dateStr} at ${timeStr}`;
+    document.querySelector('.confirm-summary').textContent = result.summary;
     document.querySelector('.confirm-email').textContent =
-      `Confirmation sent to ${email}`;
+      `Booking code: ${result.booking_code}`;
 
+    form.reset();
+    goToStep('confirmation');
+    launchConfetti();
+  } catch (err) {
+    console.error('Booking failed:', err);
+    alert(err.message || 'Booking failed. Please try again.');
+  } finally {
     btn.querySelector('.btn-text').textContent = 'Schedule Meeting';
     btn.querySelector('.btn-spinner').hidden = true;
     btn.disabled = false;
-    form.reset();
-
-    goToStep('confirmation');
-    launchConfetti();
-  }, 1200);
+  }
 });
 
 // ---------------------------------------------------------------------------
@@ -286,7 +298,7 @@ document.getElementById('book-another-btn').addEventListener('click', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Confetti
+// Confetti (unchanged)
 // ---------------------------------------------------------------------------
 function launchConfetti() {
   const canvas = document.getElementById('confetti');
