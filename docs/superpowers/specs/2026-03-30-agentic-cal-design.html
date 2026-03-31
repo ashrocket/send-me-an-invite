@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic Cal — Product Design Spec</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --surface: #FFFFFF;
+      --text: #1a1a1a;
+      --text-muted: #6b6b6b;
+      --accent: #6C5CE7;
+      --accent-light: #A29BFE;
+      --accent-bg: #F0EEFF;
+      --border: #E8E5DF;
+      --green: #00B894;
+      --green-bg: #E6F9F3;
+      --orange: #F39C12;
+      --orange-bg: #FFF5E0;
+      --rose: #E17055;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 32px 120px;
+    }
+
+    /* Header */
+    .spec-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .spec-header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .spec-header .tagline {
+      font-size: 1.15rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-item {
+      background: var(--accent-bg);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+
+    .meta-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    h2 .num {
+      color: var(--accent-light);
+      margin-right: 6px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 14px; color: var(--text); }
+
+    ul, ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    li strong { color: var(--text); }
+
+    /* Architecture diagram */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin: 20px 0;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--text-muted);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: var(--accent-bg); }
+
+    /* Code blocks */
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--accent-bg);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: var(--accent);
+    }
+
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0 24px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    /* Callout boxes */
+    .callout {
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+
+    .callout-green {
+      background: var(--green-bg);
+      border-left: 4px solid var(--green);
+    }
+
+    .callout-orange {
+      background: var(--orange-bg);
+      border-left: 4px solid var(--orange);
+    }
+
+    .callout-accent {
+      background: var(--accent-bg);
+      border-left: 4px solid var(--accent);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Flow diagram */
+    .flow {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin: 16px 0;
+      font-size: 0.88rem;
+      line-height: 2;
+      font-family: var(--mono);
+    }
+
+    .flow .arrow { color: var(--accent-light); }
+    .flow .action { color: var(--accent); font-weight: 600; }
+
+    /* File tree */
+    .file-tree {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+
+    .file-tree .comment { color: #6c7086; }
+    .file-tree .folder { color: #89b4fa; }
+    .file-tree .file { color: #a6e3a1; }
+
+    /* Scope tags */
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-v1 { background: var(--green-bg); color: var(--green); }
+    .tag-v2 { background: var(--orange-bg); color: var(--orange); }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 48px;
+      margin-bottom: 20px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .steps li strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .steps li span {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px 80px; }
+      .spec-header h1 { font-size: 1.8rem; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      table { font-size: 0.8rem; }
+      td, thead th { padding: 8px 10px; }
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+
+    .toc h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .toc ol {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .toc li {
+      margin-bottom: 4px;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="spec-header">
+      <h1>Agentic Cal</h1>
+      <p class="tagline">Your calendar, your agent, your rules.</p>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Domain</div>
+          <div class="meta-value">agenticcal.com</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Repo</div>
+          <div class="meta-value">agentic-cal</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Date</div>
+          <div class="meta-value">2026-03-30</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Status</div>
+          <div class="meta-value">Approved</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- TOC -->
+    <nav class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#overview">Product Overview</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#mcp">MCP Tools</a></li>
+        <li><a href="#themes">Theme System</a></li>
+        <li><a href="#slots">Time Slot Presentation</a></li>
+        <li><a href="#booking">Booking Lifecycle</a></li>
+        <li><a href="#hosting">Hosting &amp; Deployment</a></li>
+        <li><a href="#billing">Billing &amp; Abuse Protection</a></li>
+        <li><a href="#onboarding">Onboarding Wizard</a></li>
+        <li><a href="#testing">Testing Strategy</a></li>
+        <li><a href="#scope">v1 Scope</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1. Overview -->
+    <section class="section" id="overview">
+      <h2><span class="num">1.</span> Product Overview</h2>
+      <p>Agentic Cal is an open-source, self-hosted scheduling platform that is AI-native. Humans book through a pretty web UI. AI agents book through MCP. Hosts customize everything &mdash; including the visual theme &mdash; through their own agent.</p>
+
+      <h3>Audiences</h3>
+      <ul>
+        <li><strong>Hosts</strong> &mdash; people who want their own scheduling page (freelancers, founders, recruiters, consultants, coaches)</li>
+        <li><strong>Bookers</strong> &mdash; humans visiting the web UI or AI agents calling the MCP</li>
+      </ul>
+
+      <h3>What makes it different from Calendly</h3>
+      <ul>
+        <li>Open source, self-hostable</li>
+        <li>MCP server for agent-to-agent scheduling</li>
+        <li>Themes are prompts &mdash; tell your agent "make it brutalist" and it generates the theme</li>
+        <li>No vendor lock-in &mdash; hosting plugin system supports Cloudflare, Vercel, Heroku, etc.</li>
+        <li>Customer-friendly billing with no surprise charges</li>
+      </ul>
+    </section>
+
+    <!-- 2. Architecture -->
+    <section class="section" id="architecture">
+      <h2><span class="num">2.</span> Architecture</h2>
+      <p>Shared core, dual interface. The core library is pure functions with no HTTP or framework dependency. Both the REST API and MCP server are thin wrappers.</p>
+
+      <div class="diagram">┌─────────────────────────────────────────────┐
+│              <strong>Core Library</strong>                     │
+│         lib/calendar.js  (pure logic)        │
+│  check_availability &middot; book &middot; cancel &middot; etc.  │
+│         lib/theme.js  (CSS generator)        │
+└──────────────┬──────────────┬───────────────┘
+               │              │
+      ┌────────▼───┐   ┌─────▼──────┐
+      │  <strong>REST API</strong>  │   │ <strong>MCP Server</strong> │
+      │  /api/*    │   │   tools    │
+      └────────┬───┘   └─────┬──────┘
+               │              │
+      ┌────────▼───┐   ┌─────▼──────┐
+      │  <strong>Web UI</strong>    │   │ <strong>AI Agents</strong>  │
+      │  (humans)  │   │ (Claude,   │
+      │            │   │  GPT, etc) │
+      └────────────┘   └────────────┘</div>
+
+      <ul>
+        <li><strong>Core library</strong> &mdash; Pure functions, no HTTP, no framework. Testable in isolation.</li>
+        <li><strong>REST API</strong> &mdash; Thin wrapper for the web UI. Runs on Cloudflare Workers (or other providers via plugins).</li>
+        <li><strong>MCP Server</strong> &mdash; Thin wrapper exposing the same functions as MCP tools. Published as an npm package.</li>
+        <li><strong>Web UI</strong> &mdash; Static HTML/CSS/JS calling the REST API. Themed via CSS custom properties from theme.json.</li>
+      </ul>
+    </section>
+
+    <!-- 3. MCP Tools -->
+    <section class="section" id="mcp">
+      <h2><span class="num">3.</span> MCP Tools</h2>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>check_availability</code></td><td>Get open slots for a date range</td></tr>
+          <tr><td><code>book_meeting</code></td><td>Create a booking (returns confirmation + magic link)</td></tr>
+          <tr><td><code>cancel_meeting</code></td><td>Cancel by booking ID or magic link token</td></tr>
+          <tr><td><code>reschedule_meeting</code></td><td>Move a booking to a new slot</td></tr>
+          <tr><td><code>get_meeting_types</code></td><td>List available meeting types and durations</td></tr>
+          <tr><td><code>send_invite</code></td><td>Share MCP endpoint URL so another agent can book</td></tr>
+          <tr><td><code>update_theme</code></td><td>Apply a theme.json to change the site's look</td></tr>
+          <tr><td><code>set_availability</code></td><td>Update available hours, days, buffer time</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Agent-to-agent flow</h3>
+      <ol>
+        <li>Host's agent shares MCP endpoint: &ldquo;Book time with me at <code>agenticcal.com/ashley</code>&rdquo;</li>
+        <li>Booker's agent calls <code>check_availability</code> with a date range</li>
+        <li>Booker's agent calls <code>book_meeting</code> with chosen slot + booker details</li>
+        <li>Both sides get email notifications</li>
+        <li>Booker receives magic link + booking code for self-service management</li>
+      </ol>
+    </section>
+
+    <!-- 4. Theme System -->
+    <section class="section" id="themes">
+      <h2><span class="num">4.</span> Theme System</h2>
+
+      <h3>10 bundled themes</h3>
+      <div class="file-tree"><span class="folder">themes/</span>
+  <span class="folder">spring-easter/</span>
+    <span class="file">prompt.md</span>      <span class="comment">&larr; "Soft pastels, Easter eggs, spring garden vibes..."</span>
+    <span class="file">theme.json</span>     <span class="comment">&larr; Generated output</span>
+  <span class="folder">brutalist/</span>
+  <span class="folder">midnight/</span>
+  <span class="folder">terminal/</span>
+  <span class="folder">ocean/</span>
+  <span class="folder">sunset/</span>
+  <span class="folder">monochrome/</span>
+  <span class="folder">neon/</span>
+  <span class="folder">earth/</span>
+  <span class="folder">candy/</span></div>
+
+      <h3>theme.json structure</h3>
+      <pre><code>{
+  "name": "Spring Easter",
+  "colors": {
+    "primary": "#C3B1E1",
+    "primary-light": "#E8DFF5",
+    "accent": "#A8E6CF",
+    "background": "#FFF8E7",
+    "surface": "#FFFFFF",
+    "text": "#4A4A4A",
+    "text-muted": "#8A8A8A"
+  },
+  "fonts": {
+    "body": "Inter",
+    "heading": "Inter"
+  },
+  "shape": {
+    "card-radius": "20px",
+    "btn-radius": "12px"
+  },
+  "cursor": "dragonfly"
+}</code></pre>
+
+      <h3>Custom themes</h3>
+      <p>A theme is a prompt. User tells their agent &ldquo;make my calendar look like a 90s geocities page&rdquo; and the agent generates a theme.json. No CSS knowledge required. The <code>update_theme</code> MCP tool applies it.</p>
+      <p>The 10 bundled themes ship as both the prompt that generated them and the resulting theme.json &mdash; so they work instantly without an API key, and users can see how each theme was described and remix them.</p>
+    </section>
+
+    <!-- 5. Time Slots -->
+    <section class="section" id="slots">
+      <h2><span class="num">5.</span> Time Slot Presentation</h2>
+
+      <h3>Smart grouping rules</h3>
+      <ul>
+        <li>If 3 or fewer available slots: show as a flat list (no grouping)</li>
+        <li>If 4+ slots: group into <strong>Morning</strong> and <strong>Afternoon</strong> sections</li>
+        <li>Top-of-hour slots (:00) are visually preferred (bold) over half-hour slots</li>
+        <li>Lunch and existing meetings are excluded from availability</li>
+        <li>15-minute buffer between meetings (configurable)</li>
+      </ul>
+
+      <div class="callout callout-orange">
+        <strong>Conversational AI booking (v2)</strong>
+        Future feature: an AI chat interface alongside the calendar wizard. Requires an Anthropic or OpenAI API key. Deferred to v2.
+      </div>
+    </section>
+
+    <!-- 6. Booking Lifecycle -->
+    <section class="section" id="booking">
+      <h2><span class="num">6.</span> Booking Lifecycle</h2>
+
+      <div class="flow"><span class="action">Book</span> <span class="arrow">&rarr;</span> Confirmation email (both parties)
+     <span class="arrow">├──</span> Magic link (booker can manage)
+     <span class="arrow">└──</span> Booking code (e.g. <code>AC-7K2F</code>)
+          <span class="arrow">│</span>
+          <span class="arrow">├──</span> <span class="action">Reschedule</span> <span class="arrow">&rarr;</span> new slot selection <span class="arrow">&rarr;</span> updated emails
+          <span class="arrow">├──</span> <span class="action">Cancel</span> <span class="arrow">&rarr;</span> cancellation emails
+          <span class="arrow">└──</span> <span class="action">Magic link recovery</span> <span class="arrow">&rarr;</span> enter email <span class="arrow">&rarr;</span> get link resent</div>
+
+      <h3>Emails sent</h3>
+      <table>
+        <thead>
+          <tr><th>Event</th><th>To Host</th><th>To Booker</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Booking confirmed</td><td>Yes</td><td>Yes (includes magic link + booking code)</td></tr>
+          <tr><td>Booking rescheduled</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Booking cancelled</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Magic link recovery</td><td>No</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Magic link + booking code</h3>
+      <ul>
+        <li>Magic link in the email: <code>agenticcal.com/manage?token=abc123</code></li>
+        <li>Booking code on confirmation screen: <code>AC-7K2F</code></li>
+        <li>Either can be used to manage the booking</li>
+        <li>&ldquo;Forgot your link?&rdquo; flow: enter email, get magic link resent</li>
+      </ul>
+
+      <h3>Email delivery</h3>
+      <p>Default email provider is Resend (free tier: 3,000 emails/month, covers most hosted users). Self-hosters can bring their own SMTP/Resend/SendGrid API key for custom sender domain.</p>
+    </section>
+
+    <!-- 7. Hosting -->
+    <section class="section" id="hosting">
+      <h2><span class="num">7.</span> Hosting &amp; Deployment</h2>
+
+      <h3>Two tiers</h3>
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>Price</th><th>What you get</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Self-hosted</strong></td><td>Free</td><td>Deploy to your own Cloudflare account (or other provider via plugin)</td></tr>
+          <tr><td><strong>Hosted</strong></td><td>$3/year or $1.50/quarter</td><td><code>yourname.agenticcal.com</code> &mdash; we host it, zero setup</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Hosted tier architecture</h3>
+      <ul>
+        <li>Wildcard DNS: <code>*.agenticcal.com</code> points to a single Cloudflare Worker</li>
+        <li>Worker reads subdomain from Host header, looks up user config in D1</li>
+        <li>One deployment serves all hosted users</li>
+        <li>Wildcard SSL is free and auto-provisioned by Cloudflare</li>
+      </ul>
+
+      <h3>Hosting plugins</h3>
+      <div class="file-tree"><span class="folder">providers/</span>
+  <span class="folder">cloudflare/</span>        <span class="comment">&larr; ships with v1</span>
+    <span class="file">adapter.js</span>       <span class="comment">&larr; wires core lib to Workers runtime</span>
+    <span class="file">deploy-button.md</span> <span class="comment">&larr; one-click deploy instructions</span>
+    <span class="file">schema.sql</span>       <span class="comment">&larr; D1 migration</span>
+  <span class="folder">vercel/</span>            <span class="comment">&larr; community PR</span>
+    <span class="file">adapter.js</span>
+    ...</div>
+
+      <p>Each provider plugin implements: storage (read/write bookings), secrets (API keys), and email (send notifications). Anyone can submit a PR to add a new provider.</p>
+    </section>
+
+    <!-- 8. Billing -->
+    <section class="section" id="billing">
+      <h2><span class="num">8.</span> Billing &amp; Abuse Protection</h2>
+
+      <h3>Pricing</h3>
+      <table>
+        <thead>
+          <tr><th>Plan</th><th>Price</th><th>Stripe Fee</th><th>Net Revenue</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Quarterly</td><td>$1.50/quarter ($6/year)</td><td>$0.35/charge ($1.40/year)</td><td><strong>$4.60/year</strong></td></tr>
+          <tr><td>Annual</td><td>$3/year</td><td>$0.39/charge</td><td><strong>$2.61/year</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-green">
+        <strong>Annual incentivized</strong>
+        Costs the user half as much, and we only pay Stripe once instead of four times.
+      </div>
+
+      <h3>Fair use limits (hosted tier, per user per month)</h3>
+      <table>
+        <thead>
+          <tr><th>Resource</th><th>Limit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bookings created</td><td>50</td></tr>
+          <tr><td>Page views</td><td>10,000</td></tr>
+          <tr><td>MCP API calls</td><td>1,000</td></tr>
+          <tr><td>Emails sent</td><td>100</td></tr>
+          <tr><td>Theme updates</td><td>20</td></tr>
+        </tbody>
+      </table>
+      <p>When a limit is hit, the calendar shows &ldquo;This calendar is temporarily at capacity.&rdquo; No overage charges, ever.</p>
+
+      <h3>Anti-abuse</h3>
+      <ul>
+        <li>Rate limiting: 60 requests/min per subdomain</li>
+        <li>Bot protection: Cloudflare Turnstile on booking form (free)</li>
+        <li>Email verification required to create hosted account</li>
+        <li>Subdomain squatting prevention: no bookings in 90 days = dormant</li>
+      </ul>
+
+      <h3>Billing rules</h3>
+      <div class="callout callout-accent">
+        <strong>No auto-rebill without usage or acknowledgment.</strong>
+        Zero activity? We pause billing and email you. Active but no &ldquo;I know&rdquo; flag? We send 3 reminder emails (14, 7, and 1 day before renewal). Reply STOP anytime to cancel. The &ldquo;I know&rdquo; flag skips reminders &mdash; toggleable in settings.
+      </div>
+    </section>
+
+    <!-- 9. Onboarding -->
+    <section class="section" id="onboarding">
+      <h2><span class="num">9.</span> Onboarding Wizard</h2>
+      <p>Hosted at <code>agenticcal.com/setup</code>:</p>
+
+      <ol class="steps">
+        <li>
+          <strong>Welcome</strong>
+          <span>&ldquo;Your calendar, your agent, your rules.&rdquo; Shows what you'll get.</span>
+        </li>
+        <li>
+          <strong>Connect Google Calendar</strong>
+          <span>OAuth button &rarr; authorize &rarr; pick which calendars to check for availability.</span>
+        </li>
+        <li>
+          <strong>Your Profile</strong>
+          <span>Name, headline, meeting types, available hours.</span>
+        </li>
+        <li>
+          <strong>Choose a Theme</strong>
+          <span>Pick from 10 bundled themes, or &ldquo;I'll customize later with my agent.&rdquo;</span>
+        </li>
+        <li>
+          <strong>Host or Self-Host</strong>
+          <span>Hosted ($3/year or $1.50/quarter) vs. self-host (pick provider, paste API key, deploy button).</span>
+        </li>
+        <li>
+          <strong>Done</strong>
+          <span>Your site is live. Here's your URL. Here's your MCP endpoint. Here's how to share it.</span>
+        </li>
+      </ol>
+
+      <p>Each step has an &ldquo;I don't have this yet&rdquo; path with clear guidance.</p>
+    </section>
+
+    <!-- 10. Testing -->
+    <section class="section" id="testing">
+      <h2><span class="num">10.</span> Testing Strategy</h2>
+
+      <h3>Mock calendar system</h3>
+      <p>Four mock users with realistic schedules for local development and CI:</p>
+      <ul>
+        <li><strong>Ashley</strong> &mdash; Engineering Leader: standups, 1:1s, architecture reviews</li>
+        <li><strong>Jordan</strong> &mdash; Product Designer: design reviews, workshops, user research</li>
+        <li><strong>Priya</strong> &mdash; Freelance Consultant: multiple client standups, strategy sessions</li>
+        <li><strong>Marcus</strong> &mdash; Startup Founder: board prep, investor calls, hiring blocks</li>
+      </ul>
+      <p>Each has recurring meetings, lunch blocks, and seeded random one-off meetings. Deterministic PRNG ensures the same date always produces the same schedule.</p>
+
+      <h3>Google Workspace sandbox</h3>
+      <p>Real end-to-end testing with a Google Workspace trial on the product domain (<code>agenticcal.com</code>). Create test users matching mock personas, populate calendars via Calendar API script, test full OAuth + freebusy flow.</p>
+
+      <h3>Test layers</h3>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>What it covers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Unit</td><td>Core library: availability calculation, booking logic, theme generation</td></tr>
+          <tr><td>Integration</td><td>REST API endpoints with mock calendar data</td></tr>
+          <tr><td>MCP</td><td>MCP tool invocations against mock data</td></tr>
+          <tr><td>E2E</td><td>Full browser flow against Google Workspace sandbox</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 11. Scope -->
+    <section class="section" id="scope">
+      <h2><span class="num">11.</span> v1 Scope</h2>
+
+      <h3><span class="tag tag-v1">v1</span> In scope</h3>
+      <ul>
+        <li>Web UI: full booking flow (meeting type, date, time, details, confirmation)</li>
+        <li>MCP server: check_availability, book_meeting, cancel, reschedule, get_meeting_types, send_invite</li>
+        <li>Theme system: 10 bundled themes, custom theme via update_theme MCP tool</li>
+        <li>Booking lifecycle: email notifications, magic links, booking codes, reschedule, cancel</li>
+        <li>Hosting: Cloudflare provider, hosted tier with wildcard subdomains</li>
+        <li>Onboarding wizard at agenticcal.com/setup</li>
+        <li>Billing: Stripe integration, $3/year or $1.50/quarter</li>
+        <li>Mock calendar system for development</li>
+        <li>Google Calendar integration (real freebusy + event creation)</li>
+      </ul>
+
+      <h3><span class="tag tag-v2">v2</span> Deferred</h3>
+      <ul>
+        <li>Conversational AI booking (chat interface with Anthropic/OpenAI API key)</li>
+        <li>Additional hosting providers (Vercel, Heroku, Railway &mdash; via community PRs)</li>
+        <li>Custom domain support for hosted tier (BYOD with CNAME)</li>
+        <li>Multiple calendar provider support (Outlook, iCloud)</li>
+        <li>Recurring meeting types</li>
+        <li>Team/org scheduling (multiple hosts)</li>
+      </ul>
+    </section>
+
+  </div>
+</body>
+</html>

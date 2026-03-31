@@ -389,6 +389,35 @@ textarea {
    12. Time slots
    --------------------------------------------------------- */
 .slots-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Flat layout for ≤3 slots — single column, breathing room */
+.slots-flat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Grouped layout — morning / afternoon sections */
+.slot-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slot-group-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--spring-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 2px;
+}
+
+.slot-group-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
@@ -410,6 +439,11 @@ textarea {
     border-color 0.15s var(--transition-ease),
     color 0.15s var(--transition-ease),
     transform 0.15s var(--transition-spring);
+}
+
+/* Top-of-hour slots get subtle emphasis */
+.slot-btn.preferred {
+  font-weight: 600;
 }
 
 .slot-btn:hover {
