@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Your Booking — Agentical</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/animations.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="card">
+      <div class="card-header">
+        <h1>Manage Booking</h1>
+      </div>
+
+      <!-- Lookup view: enter code or email -->
+      <section class="step active" data-step="lookup" id="lookup-section">
+        <h2>Find Your Booking</h2>
+        <form id="lookup-form" novalidate>
+          <div class="form-group">
+            <input type="text" id="field-code" name="code" placeholder=" " autocomplete="off" />
+            <label for="field-code">Booking Code (e.g. AC-7K2F)</label>
+          </div>
+          <p style="text-align: center; color: var(--spring-text-light); font-size: 0.85rem; margin-bottom: 16px;">or</p>
+          <div class="form-group">
+            <input type="email" id="field-recover-email" name="email" placeholder=" " autocomplete="email" />
+            <label for="field-recover-email">Email Address (to resend magic link)</label>
+          </div>
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Find Booking</span>
+            <span class="btn-spinner" aria-hidden="true" hidden></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Booking details view -->
+      <section class="step" data-step="details" id="details-section">
+        <div class="step-back">
+          <button class="back-btn" id="back-to-lookup" type="button">&#8592; Back</button>
+        </div>
+        <h2>Your Booking</h2>
+        <div id="booking-details">
+          <div class="booking-info">
+            <p class="booking-type" id="manage-type"></p>
+            <p class="booking-datetime" id="manage-datetime"></p>
+            <p class="booking-code-display" id="manage-code" style="color: var(--spring-text-light); font-size: 0.85rem;"></p>
+            <p class="booking-status" id="manage-status"></p>
+          </div>
+        </div>
+        <div id="booking-actions" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-secondary" id="reschedule-btn">Reschedule</button>
+          <button type="button" class="btn-secondary" id="cancel-btn" style="color: var(--spring-rose); border-color: var(--spring-rose);">Cancel Booking</button>
+        </div>
+      </section>
+
+      <!-- Cancel confirmation -->
+      <section class="step" data-step="cancelled" id="cancelled-section">
+        <div class="check-mark" aria-hidden="true" style="background-color: var(--spring-rose);">&#10007;</div>
+        <h2>Booking Cancelled</h2>
+        <p class="confirm-summary" id="cancel-summary"></p>
+        <p style="color: var(--spring-text-light); font-size: 0.85rem; margin-top: 8px; margin-bottom: 24px;">A cancellation notice has been sent via Google Calendar.</p>
+        <a href="/" class="btn-secondary" style="text-decoration: none; text-align: center;">Book a New Time</a>
+      </section>
+
+      <!-- Recovery sent -->
+      <section class="step" data-step="recovery-sent" id="recovery-section">
+        <div class="check-mark" aria-hidden="true">&#9993;</div>
+        <h2>Check Your Email</h2>
+        <p style="text-align: center; color: var(--spring-text); margin-bottom: 24px;">If there are bookings for that email address, we've sent you a management link.</p>
+        <a href="/" class="btn-secondary" style="text-decoration: none; text-align: center;">Back to Calendar</a>
+      </section>
+
+    </div>
+  </div>
+
+  <script type="module" src="./js/manage.js"></script>
+</body>
+</html>
