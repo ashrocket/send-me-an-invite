@@ -61,3 +61,40 @@ describe('ResendMailer', () => {
     })).rejects.toThrow('Resend API error: 401');
   });
 });
+
+describe('SendGridMailer', () => {
+  it('calls SendGrid API with correct payload', async () => {
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      headers: { get: () => 'sg_msg_123' },
+    });
+    global.fetch = mockFetch;
+
+    const mailer = createMailer({ provider: 'sendgrid', apiKey: 'SG.test' });
+    const result = await mailer.send({
+      to: 'jane@example.com',
+      subject: 'Booking Confirmed',
+      html: '<p>Booked!</p>',
+      from: 'noreply@agentical.com',
+    });
+
+    expect(result.success).toBe(true);
+    const [url, opts] = mockFetch.mock.calls[0];
+    expect(url).toBe('https://api.sendgrid.com/v3/mail/send');
+    expect(opts.headers['Authorization']).toBe('Bearer SG.test');
+  });
+});
+
+describe('SmtpMailer', () => {
+  it('can be instantiated with config', () => {
+    const mailer = createMailer({
+      provider: 'smtp',
+      host: 'smtp.example.com',
+      port: 587,
+      user: 'test',
+      pass: 'secret',
+    });
+    expect(mailer).toBeDefined();
+    expect(typeof mailer.send).toBe('function');
+  });
+});
