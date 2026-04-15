@@ -10,8 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --config vitest.config.js",
+    "test:watch": "vitest --config vitest.config.js",
     "deploy": "npm run build && wrangler pages deploy dist",
     "mcp": "node mcp/server.js",
     "setup-oauth": "node scripts/setup-oauth.js"
